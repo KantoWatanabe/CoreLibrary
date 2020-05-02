@@ -1,0 +1,21 @@
+{
+    "name": "kantowatanabe/corelibrary",
+    "description": "CoreLibrary is a simple and minimal library.",
+    "type": "library",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Kanto Watanabe",
+            "email": "watanabe.kanto@gmail.com"
+        }
+    ],
+    "require": {},
+    "autoload": {
+        "psr-4": {
+            "CoreLibray\\": "src/"
+        },
+        "files": [
+            "src/bootstrap.php"
+        ]
+    }
+}
