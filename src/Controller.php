@@ -1,7 +1,7 @@
 <?php
 namespace CoreLibrary;
 
-use CoreLibray\Log;
+use CoreLibrary\Log;
 
 abstract class Controller
 {

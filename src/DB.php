@@ -1,8 +1,8 @@
 <?php
 namespace CoreLibrary;
 
-use CoreLibray\Config;
-use CoreLibray\Log;
+use CoreLibrary\Config;
+use CoreLibrary\Log;
 
 class DB
 {
