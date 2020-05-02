@@ -1,5 +1,5 @@
 <?php
-namespace CoreLibray;
+namespace CoreLibrary;
 
 use CoreLibray\Log;
 
