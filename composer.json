@@ -12,7 +12,7 @@
     "require": {},
     "autoload": {
         "psr-4": {
-            "CoreLibrary\\": "src/"
+            "Kore\\": "src/"
         },
         "files": [
             "src/bootstrap.php"
