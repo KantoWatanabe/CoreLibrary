@@ -3,4 +3,3 @@ parameters:
 	bootstrap: tests/bootstrap.php
 	paths:
 		- src
-		- tests

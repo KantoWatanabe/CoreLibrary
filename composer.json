@@ -20,6 +20,9 @@
         ]
     },
     "autoload-dev": {
+        "psr-4": {
+            "mock\\": "tests/mock/"
+        }
     },
     "require-dev": {
         "phpunit/phpunit": "^9.1",

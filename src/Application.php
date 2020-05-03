@@ -38,6 +38,18 @@ class Application
     {
         if ($path === null) $path = $_SERVER['REQUEST_URI'];
 
+        list($class, $controller, $args) = $this->parseController($path);
+    
+        $class->main($controller, $args);      
+    }
+
+
+    /**
+     * @param string $path
+     * @return array<mixed>
+     */
+    protected function parseController($path)
+    {
         if (false !== $pos = strpos($path, '?')) {
             $path = substr($path, 0, $pos);
         }
@@ -50,9 +62,12 @@ class Application
     
         $parray = explode('/', $path);
     
+        $class = null;
+        $controller = $this->defaultController;
+        $args = [];
         foreach ($parray as $i => $p) {
-            $controller = implode('\\', array_slice($parray, 0, $i+1));
-            if ($controller === '') $controller = $this->defaultController;
+            $tmpController = implode('\\', array_slice($parray, 0, $i+1));
+            if ($tmpController !== '') $controller = $tmpController;
             $controller = CONTROLLERS_NS.$controller;
             if (class_exists($controller)) {
                 $class = new $controller();
@@ -65,15 +80,26 @@ class Application
                 exit;
             }
         }
-    
-        $class->main($controller, $args);      
+        return [$class, $controller, $args];
+        //return [null, 'hoge', []];
     }
 
     /**
-     * @param array $argv
+     * @param array<string> $argv
      * @return void
      */
     public function runCmd($argv)
+    {
+        list($class, $command, $args, $opts) = $this->parseCommand($argv);
+
+        $class->main($command, $args, $opts);
+    }
+
+    /**
+     * @param array<string> $argv
+     * @return array<mixed>
+     */
+    protected function parseCommand($argv)
     {
         if (!isset($argv[1])) {
             throw new \Exception('Unable to find command name');
@@ -89,7 +115,7 @@ class Application
         $args = [];
         $opts = [];
         foreach ($argv as $key => $value) {
-            if ($key > 1 && isset($value)) {
+            if ($key > 1) {
                 if (preg_match('/^--[a-zA-Z0-9]+=[a-zA-Z0-9]+$/', $value)) {
                     $params = explode('=', $value);
                     $name = str_replace('--', '', $params[0]);
@@ -99,7 +125,6 @@ class Application
                 }
             }
         }
-
-        $class->main($command, $args, $opts);
+        return [$class, $command, $args, $opts];
     }
 }
