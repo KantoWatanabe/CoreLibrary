@@ -1,2 +1,2 @@
-# CoreLibrary
-CoreLibrary is a simple and minimal library.
+# KoreLibrary
+KoreLibrary is a simple and minimal library.

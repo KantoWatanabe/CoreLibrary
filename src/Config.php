@@ -1,5 +1,5 @@
 <?php
-namespace CoreLibrary;
+namespace Kore;
 
 final class Config
 {

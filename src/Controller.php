@@ -1,7 +1,7 @@
 <?php
-namespace CoreLibrary;
+namespace Kore;
 
-use CoreLibrary\Log;
+use Kore\Log;
 
 abstract class Controller
 {
