@@ -1,6 +1,6 @@
 {
-    "name": "kantowatanabe/corelibrary",
-    "description": "CoreLibrary is a simple and minimal library.",
+    "name": "kantowatanabe/korelibrary",
+    "description": "KoreLibrary is a simple and minimal library.",
     "type": "library",
     "license": "MIT",
     "authors": [
