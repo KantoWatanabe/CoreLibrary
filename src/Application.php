@@ -51,9 +51,9 @@ class Application
         $parray = explode('/', $path);
     
         foreach ($parray as $i => $p) {
-            $controller = implode('/', array_slice($parray, 0, $i+1));
+            $controller = implode('\\', array_slice($parray, 0, $i+1));
             if ($controller === '') $controller = $this->defaultController;
-            $controller = str_replace('/', '\\', CONTROLLERS_DIR.$controller);
+            $controller = CONTROLLERS_NS.$controller;
             if (class_exists($controller)) {
                 $class = new $controller();
                 $args = array_slice($parray, $i+1);
@@ -79,7 +79,7 @@ class Application
             throw new \Exception('Unable to find command name');
         }
         
-        $command = str_replace('/', '\\', COMMANDS_DIR.$argv[1]);
+        $command = COMMANDS_NS.str_replace('/', '\\', $argv[1]);
         if (!class_exists($command)) {
             throw new \Exception('Unable to load command class ->' . $command);
         }
