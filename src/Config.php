@@ -1,7 +1,7 @@
 <?php
 namespace Kore;
 
-final class Config
+class Config
 {
     /**
      * @var array
@@ -15,8 +15,8 @@ final class Config
     public static function create($env = null)
     {
         if (!self::$config) {
-            $env = ($env === null) ? '' : $env;
-            $configfile = CONFIG_DIR.sprintf('config-%s.php', $env);
+            $env = ($env === null) ? '' : '-'.$env;
+            $configfile = CONFIG_DIR.'config'.$env.'.php';
             if (!file_exists($configfile)) {
                 throw new \Exception('Unable to find config file -> ' . $configfile);
             }
