@@ -100,6 +100,6 @@ class Application
             }
         }
 
-        $class->main($conmand, $args, $opts);
+        $class->main($command, $args, $opts);
     }
 }
