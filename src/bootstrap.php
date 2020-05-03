@@ -13,5 +13,5 @@ define('LOGS_DIR', TMP_DIR.'logs/');
 define('BIN_DIR', APP_DIR.'bin/');
 
 // define namespace
-define('CONTROLLERS_NS', APP_DIR.'controllers\\');
-define('COMMANDS_NS', APP_DIR.'commands\\');
+define('CONTROLLERS_NS', APP_NS.'controllers\\');
+define('COMMANDS_NS', APP_NS.'commands\\');
