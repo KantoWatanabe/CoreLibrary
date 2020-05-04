@@ -1,7 +1,7 @@
 <?php
 
 // for test
-define('ROOT_DIR', __DIR__.'/../');
+define('ROOT_DIR', __DIR__.'/');
 define('APP_DIR', ROOT_DIR.'mock/');
 define('APP_NS', 'mock\\');
 
@@ -17,3 +17,22 @@ define('BIN_DIR', APP_DIR.'bin/');
 // define namespace
 define('CONTROLLERS_NS', APP_NS.'controllers\\');
 define('COMMANDS_NS', APP_NS.'commands\\');
+
+// AutoLoad
+spl_autoload_register(function ($class) {
+
+    $prefix = APP_NS;
+
+    $len = strlen($prefix);
+    if (strncmp($prefix, $class, $len) !== 0) {
+        return;
+    }
+
+    $relative_class = substr($class, $len);
+
+    $file = APP_DIR.str_replace('\\', '/', $relative_class).'.php';
+
+    if (file_exists($file)) {
+        require $file;
+    }
+});
