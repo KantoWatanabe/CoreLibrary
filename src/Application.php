@@ -39,10 +39,14 @@ class Application
         if ($path === null) $path = $_SERVER['REQUEST_URI'];
 
         list($class, $controller, $args) = $this->parseController($path);
+
+        if ($class === null) {
+            http_response_code(404);
+            exit;
+        }
     
         $class->main($controller, $args);      
     }
-
 
     /**
      * @param string $path
@@ -74,14 +78,8 @@ class Application
                 $args = array_slice($parray, $i+1);
                 break;
             }
-    
-            if ($i === count($parray)-1) {
-                http_response_code(404);
-                exit;
-            }
         }
         return [$class, $controller, $args];
-        //return [null, 'hoge', []];
     }
 
     /**
