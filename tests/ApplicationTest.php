@@ -1,24 +1,28 @@
 <?php
 use PHPUnit\Framework\TestCase;
 
+use Kore\Application;
+
 class ApplicationTest extends TestCase
 {
 
     public function testParseController()
     {
-        $app = new mock\ApplicationMock();
+        $app = new Application();
+        $method = new \ReflectionMethod(get_class($app), 'parseController');
+        $method->setAccessible(true);
 
-        list($class, $controller, $args) = $app->parseControllerMock('/mock');
+        list($class, $controller, $args) = $method->invoke($app, '/mock');
         $this->assertInstanceOf(mock\controllers\mock::class, $class);
         $this->assertSame('mock\\controllers\\mock', $controller);
         $this->assertSame([], $args);
 
-        list($class, $controller, $args) = $app->parseControllerMock('/mock/path1/path2');
+        list($class, $controller, $args) = $method->invoke($app, '/mock/path1/path2');
         $this->assertInstanceOf(mock\controllers\mock::class, $class);
         $this->assertSame('mock\\controllers\\mock', $controller);
         $this->assertSame(['path1', 'path2'], $args);
 
-        list($class, $controller, $args) = $app->parseControllerMock('/path1/mock/path1/');
+        list($class, $controller, $args) = $method->invoke($app, '/path1/mock/path1/');
         $this->assertInstanceOf(mock\controllers\path1\mock::class, $class);
         $this->assertSame('mock\\controllers\\path1\\mock', $controller);
         $this->assertSame(['path1'], $args);
