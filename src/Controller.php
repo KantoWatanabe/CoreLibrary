@@ -144,7 +144,7 @@ abstract class Controller
      * @return array $data
      * @return string
      */
-    protected function respondViewBuffered($path, $data=[])
+    protected function extractView($path, $data=[])
     {
         ob_start();
         $this->respondView($path, $data);
