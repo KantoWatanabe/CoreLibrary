@@ -4,7 +4,7 @@ namespace Kore;
 class Config
 {
     /**
-     * @var array
+     * @var array<mixed>
      */
     private static $config;
 
