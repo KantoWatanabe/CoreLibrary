@@ -78,10 +78,9 @@ class Log
             $msg .= ob_get_contents();
             ob_end_clean();
         }
-        $tarray = explode('.', microtime(true));
         $trace = debug_backtrace(DEBUG_BACKTRACE_IGNORE_ARGS, 3);
         $caller = isset($trace[2]['class']) ? sprintf('%s%s%s', $trace[2]['class'], $trace[2]['type'], $trace[2]['function']) : '';
-        $log = sprintf('[%s.%s][%s][%s][%s]%s', date('Y-m-d H:i:s', $tarray[0]), $tarray[1], getmypid(), $logLevel, $caller, $msg);
+        $log = sprintf('[%s.%s][%s][%s][%s]%s', date('Y-m-d H:i:s'), explode('.', (string)microtime(true))[1], getmypid(), $logLevel, $caller, $msg);
         //$log = sprintf('[%s.%s][%s][%s]%s', date('Y-m-d H:i:s', $tarray[0]), $tarray[1], getmypid(), $logLevel, $msg);
         file_put_contents($logfile, $log, FILE_APPEND);
     }
