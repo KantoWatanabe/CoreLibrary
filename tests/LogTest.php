@@ -11,8 +11,6 @@ class LogTest extends TestCase
         $property = $class->getProperty('logName');
         $property->setAccessible(true);
 
-        $this->assertSame('app', $property->getValue());
-
         Log::init('test');
         $this->assertSame('test', $property->getValue());
     }
