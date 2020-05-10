@@ -18,14 +18,14 @@ class ConfigTest extends TestCase
     }
 
     /**
-     * @dataProvider testGetProvider
+     * @dataProvider provider
      */
     public function testGet($key, $expected)
     {
         $this->assertSame($expected, Config::get($key));
     }
 
-    public function testGetProvider()
+    public function provider()
     {
         return [
             ["test", "test config"],
