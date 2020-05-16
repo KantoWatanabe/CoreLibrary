@@ -7,10 +7,10 @@ class HttpClient
 {
     /**
      * @param string $url
-     * @param array $params
-     * @param array $headers
+     * @param array<mixed> $params
+     * @param array<mixed> $headers
      * @param string|null $userpwd
-     * @return array
+     * @return mixed
      */
     public function get($url, $params = [], $headers = [], $userpwd = null)
     {
@@ -19,10 +19,10 @@ class HttpClient
 
     /**
      * @param string $url
-     * @param array $params
-     * @param array $headers
+     * @param array<mixed> $params
+     * @param array<mixed> $headers
      * @param string|null $userpwd
-     * @return array
+     * @return mixed
      */
     public function post($url, $params = [], $headers = [], $userpwd = null)
     {
@@ -32,10 +32,10 @@ class HttpClient
     /**
      * @param string $method
      * @param string $url
-     * @param array $params
-     * @param array $headers
+     * @param array<mixed> $params
+     * @param array<mixed> $headers
      * @param string|null $userpwd
-     * @return array
+     * @return mixed
      */
     private function communicate($method, $url, $params = [], $headers = [], $userpwd = null)
     {
@@ -70,6 +70,11 @@ class HttpClient
         curl_close($curl);
 
         Log::debug(sprintf('[%s][%s][%ssec]', $url, $http_code, $total_time));
+        if (!$response) {
+            Log::info('Acquisition failed');
+            return false;
+        }
+        /** @phpstan-ignore-next-line */
         $result = json_decode($response, true);
         return $result;
     }
