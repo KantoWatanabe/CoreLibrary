@@ -100,7 +100,7 @@ abstract class Controller
     /**
      * @return object
      */
-    protected function getInputStream()
+    protected function getInput()
     {
         $input = json_decode(file_get_contents('php://input'), true);
         return $input;
