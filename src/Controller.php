@@ -10,7 +10,7 @@ abstract class Controller
      */   
     protected $controller;
     /**
-     * @var array
+     * @var array<string>
      */
     protected $args = [];
 
@@ -21,7 +21,7 @@ abstract class Controller
 
     /**
      * @param string $controller
-     * @param array $args
+     * @param array<string> $args
      * @return void
      */
     public function main($controller, $args)
@@ -79,7 +79,7 @@ abstract class Controller
 
     /**
      * @param string $key
-     * @return string
+     * @return string|null
      */
     protected function getQuery($key)
     {
@@ -89,7 +89,7 @@ abstract class Controller
 
     /**
      * @param string $key
-     * @return string
+     * @return string|null
      */
     protected function getPost($key)
     {
@@ -98,17 +98,19 @@ abstract class Controller
     }
 
     /**
-     * @return object
+     * @return object|false
      */
     protected function getInput()
     {
-        $input = json_decode(file_get_contents('php://input'), true);
+        $rawInput = file_get_contents('php://input');
+        if (!$rawInput) return false;
+        $input = json_decode($rawInput, true);
         return $input;
     }
 
     /**
      * @param string $key
-     * @return string
+     * @return string|null
      */
     protected function getCookie($key)
     {
@@ -118,7 +120,7 @@ abstract class Controller
  
     /**
      * @param string $key
-     * @return string
+     * @return string|null
      */
     protected function getArg($key)
     {
@@ -131,7 +133,7 @@ abstract class Controller
 
     /**
      * @param string $path
-     * @return array $data
+     * @param array<mixed> $data
      * @return void
      */
     protected function respondView($path, $data=[])
@@ -141,8 +143,8 @@ abstract class Controller
 
     /**
      * @param string $path
-     * @return array $data
-     * @return string
+     * @param array<mixed> $data
+     * @return string|false
      */
     protected function extractView($path, $data=[])
     {
@@ -154,7 +156,7 @@ abstract class Controller
     }
 
     /**
-     * @return array $data
+     * @param array<mixed> $data
      * @return void
      */
     protected function respondJson($data=[])
