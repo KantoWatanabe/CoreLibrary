@@ -10,11 +10,11 @@ abstract class Command
      */ 
     protected $command;
     /**
-     * @var array
+     * @var array<string>
      */
     protected $args = [];
     /**
-     * @var array
+     * @var array<string>
      */
     protected $opts = [];
 
@@ -24,9 +24,9 @@ abstract class Command
     abstract protected function exec();
     
     /**
-     * @var string $command
-     * @var array $args
-     * @var array $opts
+     * @param string $command
+     * @param array<string> $args
+     * @param array<string> $opts
      * @return void
      */
     public function main($command, $args, $opts)
@@ -61,7 +61,8 @@ abstract class Command
     protected function commandName()
     {
         $namespace = explode('\\', $this->command);
-        return lcfirst(end($namespace));
+        /** @phpstan-ignore-next-line */
+        return end($namespace);
     }
 
     /**
@@ -78,7 +79,7 @@ abstract class Command
     
     /**
      * @param string $key
-     * @return string
+     * @return string|null
      */
     protected function getArg($key)
     {
@@ -88,7 +89,7 @@ abstract class Command
 
     /**
      * @param string $key
-     * @return string
+     * @return string|null
      */
     protected function getOpt($key)
     {
