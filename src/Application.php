@@ -6,11 +6,11 @@ class Application
     /**
      * @var string
      */   
-    private $basePath = '';
+    protected $basePath = '';
     /**
      * @var string
      */
-    private $defaultController = 'index';
+    protected $defaultController = 'index';
 
     /**
      * @param string $basePath ex. 'mybasepath/'
