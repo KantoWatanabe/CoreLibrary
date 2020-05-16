@@ -67,8 +67,8 @@ class DB
 
     /**
      * @param string $query
-     * @param array $param
-     * @return array
+     * @param array<mixed> $params
+     * @return array<mixed>|false
      */
     public function select($query, $params = [])
     {
@@ -80,8 +80,8 @@ class DB
 
     /**
      * @param string $query
-     * @param array $param
-     * @return int
+     * @param array<mixed> $params
+     * @return mixed|false
      */
     public function count($query, $params = [])
     {
@@ -93,19 +93,19 @@ class DB
 
     /**
      * @param string $query
-     * @param array $param
-     * @return int
+     * @param array<mixed> $params
+     * @return string
      */
     public function insert($query, $params = [])
     {
         $stm = $this->execute($query, $params);
 
-        return self::$pdo->lastInsertId();
+        return $this->pdo->lastInsertId();
     }
 
     /**
      * @param string $query
-     * @param array $param
+     * @param array<mixed> $params
      * @return int
      */
     public function update($query, $params = [])
@@ -117,7 +117,7 @@ class DB
 
     /**
      * @param string $query
-     * @param array $param
+     * @param array<mixed> $params
      * @return int
      */
     public function delete($query, $params = [])
@@ -145,8 +145,8 @@ class DB
 
     /**
      * @param string $query
-     * @param array $param
-     * @return \PDOStatement
+     * @param array<mixed> $params
+     * @return \PDOStatement<mixed>
      */
     private function execute($query, $params)
     {
@@ -166,7 +166,6 @@ class DB
      */
     private function datatype($value)
     {
-        $datatype;
         switch (gettype($value)) {
             case 'boolean':
                 $datatype = \PDO::PARAM_BOOL;
