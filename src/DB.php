@@ -170,11 +170,19 @@ class DB
     {
         $stm = $this->pdo->prepare($query);
 
+        $keys = [];
+        $values = [];
         foreach ($params as $key => $value) {
-            $stm->bindValue(":{$key}", $value, $this->datatype($value));
+            $parameter = ":{$key}";
+            $keys[] = $parameter;
+            $values[] = is_string($value) ? "'$value'" : $value;
+            $stm->bindValue($parameter, $value, $this->dataType($value));
         }
 
+        $start = microtime(true);
         $stm->execute();
+        $end = microtime(true);
+        Log::debug(sprintf('%f - %s', $end-$start, str_replace($keys, $values, preg_replace(['/[\n\t]/', '/\s+/'], ['', ' '], $query))));
         return $stm;
     }
 
@@ -182,7 +190,7 @@ class DB
      * @param mixed $value
      * @return int
      */
-    private function datatype($value)
+    private function dataType($value)
     {
         switch (gettype($value)) {
             case 'boolean':
