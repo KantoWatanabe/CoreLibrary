@@ -144,6 +144,24 @@ class DB
     }
 
     /**
+     * @param string $marker
+     * @param array<mixed> $values
+     * @return array<mixed>
+     */
+    public static function getInClause($marker, $values) {
+        $inClause = 'IN (';
+        $params = [];
+        foreach ($values as $i => $value) {
+            if ($i !== 0) $inClause .= ', ';
+            $key = $marker.'_'.$i;
+            $inClause .= $key;
+            $params[$key] = $value;
+        }
+        $inClause .= ')';
+        return [$inClause, $params];
+    } 
+
+    /**
      * @param string $query
      * @param array<mixed> $params
      * @return \PDOStatement<mixed>
