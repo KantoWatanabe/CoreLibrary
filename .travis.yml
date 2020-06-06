@@ -1,5 +1,9 @@
 language: php
 php:
   - 7.3
+services:
+  - mysql
+before_install:
+  - mysql -u root --password="" < tests/test.sql
 before_script:
   - composer install
