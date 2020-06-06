@@ -1,6 +1,9 @@
 <?php
 
 // for test
+date_default_timezone_set('Asia/Tokyo');
+mb_internal_encoding('UTF-8');
+
 define('ROOT_DIR', __DIR__.'/');
 define('APP_DIR', ROOT_DIR.'mock/');
 define('APP_NS', 'mock\\');
