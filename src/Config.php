@@ -29,11 +29,15 @@ class Config
     /**
      * @param string|null $key
      * @return mixed
-     */ 
+     */
     public static function get($key = null)
     {
-        if ($key === null) return self::$config;
-        if (!isset(self::$config[$key])) return null;
+        if ($key === null) {
+            return self::$config;
+        }
+        if (!isset(self::$config[$key])) {
+            return null;
+        }
         return self::$config[$key];
     }
 }

@@ -66,7 +66,7 @@ SQL;
             'col1' => 1,
             'col2' => 'piyo']);
 
-        $this->assertSame(true, true);       
+        $this->assertSame(true, true);
 
         // DELETE
 
@@ -80,7 +80,8 @@ SQL;
         $this->assertSame(true, true);
     }
 
-    public function testGetInClause() {
+    public function testGetInClause()
+    {
         $this->assertSame(['IN (test_0, test_1, test_2)',['test_0' => 1, 'test_1' => 2, 'test_2' => 3]], DB::getInClause('test', [1,2,3]));
     }
 }

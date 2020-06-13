@@ -23,7 +23,6 @@ define('COMMANDS_NS', APP_NS.'commands\\');
 
 // AutoLoad
 spl_autoload_register(function ($class) {
-
     $prefix = APP_NS;
 
     $len = strlen($prefix);

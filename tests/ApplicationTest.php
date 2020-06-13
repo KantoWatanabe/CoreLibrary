@@ -5,7 +5,6 @@ use Kore\Application;
 
 class ApplicationTest extends TestCase
 {
-
     public function testParseController()
     {
         $app = new Application();
@@ -40,5 +39,4 @@ class ApplicationTest extends TestCase
         $this->assertSame(['hoge'], $args);
         $this->assertSame(['env' => 'test'], $opts);
     }
-
 }

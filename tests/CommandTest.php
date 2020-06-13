@@ -49,5 +49,4 @@ class CommandTest extends TestCase
         $this->assertSame('test', $method->invoke($class, 'env'));
         $this->assertSame(null, $method->invoke($class, 'notfound'));
     }
-
 }

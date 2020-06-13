@@ -7,7 +7,7 @@ abstract class Controller
 {
     /**
      * @var string
-     */   
+     */
     protected $controller;
     /**
      * @var array<string>
@@ -75,7 +75,7 @@ abstract class Controller
     protected function getMethod()
     {
         return $_SERVER['REQUEST_METHOD'];
-    }   
+    }
 
     /**
      * @param string $key
@@ -83,7 +83,9 @@ abstract class Controller
      */
     protected function getQuery($key)
     {
-        if (!isset($_GET[$key])) return null;
+        if (!isset($_GET[$key])) {
+            return null;
+        }
         return $_GET[$key];
     }
 
@@ -93,7 +95,9 @@ abstract class Controller
      */
     protected function getPost($key)
     {
-        if (!isset($_POST[$key])) return null;
+        if (!isset($_POST[$key])) {
+            return null;
+        }
         return $_POST[$key];
     }
 
@@ -103,7 +107,9 @@ abstract class Controller
     protected function getInput()
     {
         $rawInput = file_get_contents('php://input');
-        if (!$rawInput) return false;
+        if (!$rawInput) {
+            return false;
+        }
         $input = json_decode($rawInput, true);
         return $input;
     }
@@ -114,7 +120,9 @@ abstract class Controller
      */
     protected function getCookie($key)
     {
-        if (!isset($_COOKIE[$key])) return null;
+        if (!isset($_COOKIE[$key])) {
+            return null;
+        }
         return $_COOKIE[$key];
     }
  
@@ -124,7 +132,9 @@ abstract class Controller
      */
     protected function getArg($key)
     {
-        if (!isset($this->args[$key])) return null;
+        if (!isset($this->args[$key])) {
+            return null;
+        }
         return $this->args[$key];
     }
 

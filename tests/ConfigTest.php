@@ -33,5 +33,4 @@ class ConfigTest extends TestCase
             ["noconfig", null],
         ];
     }
-
 }

@@ -1,7 +1,9 @@
 <?php
 
 // 本当はexitしたいが、testでcomposerのautoload filesした際に終了してしまうためreturnする
-if (!defined('APP_DIR') or !defined('APP_NS')) return;
+if (!defined('APP_DIR') or !defined('APP_NS')) {
+    return;
+}
 
 // define directory
 define('CONFIG_DIR', APP_DIR.'config/');

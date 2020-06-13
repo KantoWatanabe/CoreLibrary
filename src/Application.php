@@ -2,10 +2,10 @@
 namespace Kore;
 
 class Application
-{    
+{
     /**
      * @var string
-     */   
+     */
     protected $basePath = '';
     /**
      * @var string
@@ -36,7 +36,9 @@ class Application
      */
     public function run($path = null)
     {
-        if ($path === null) $path = $_SERVER['REQUEST_URI'];
+        if ($path === null) {
+            $path = $_SERVER['REQUEST_URI'];
+        }
 
         list($class, $controller, $args) = $this->parseController($path);
 
@@ -45,7 +47,7 @@ class Application
             exit;
         }
     
-        $class->main($controller, $args);      
+        $class->main($controller, $args);
     }
 
     /**
@@ -71,7 +73,9 @@ class Application
         $args = [];
         foreach ($parray as $i => $p) {
             $tmpController = implode('\\', array_slice($parray, 0, $i+1));
-            if ($tmpController !== '') $controller = $tmpController;
+            if ($tmpController !== '') {
+                $controller = $tmpController;
+            }
             $controller = CONTROLLERS_NS.$controller;
             if (class_exists($controller)) {
                 $class = new $controller();

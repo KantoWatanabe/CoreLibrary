@@ -7,7 +7,7 @@ abstract class Command
 {
     /**
      * @var string
-     */ 
+     */
     protected $command;
     /**
      * @var array<string>
@@ -83,7 +83,9 @@ abstract class Command
      */
     protected function getArg($key)
     {
-        if (!isset($this->args[$key])) return null;
+        if (!isset($this->args[$key])) {
+            return null;
+        }
         return $this->args[$key];
     }
 
@@ -93,7 +95,9 @@ abstract class Command
      */
     protected function getOpt($key)
     {
-        if (!isset($this->opts[$key])) return null;
-        return $this->opts[$key];    
+        if (!isset($this->opts[$key])) {
+            return null;
+        }
+        return $this->opts[$key];
     }
 }

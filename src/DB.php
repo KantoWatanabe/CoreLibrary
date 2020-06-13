@@ -15,7 +15,7 @@ class DB
      * @param string $dbconfig
      * @return void
      */
-    private final function __construct($dbconfig)
+    final private function __construct($dbconfig)
     {
         $this->connect($dbconfig);
     }
@@ -24,7 +24,7 @@ class DB
      * @return void
      * @throws \Exception
      */
-    public final function __clone()
+    final public function __clone()
     {
         throw new \Exception('__clone is not allowed!');
     }
@@ -148,18 +148,21 @@ class DB
      * @param array<mixed> $values
      * @return array<mixed>
      */
-    public static function getInClause($marker, $values) {
+    public static function getInClause($marker, $values)
+    {
         $inClause = 'IN (';
         $params = [];
         foreach ($values as $i => $value) {
-            if ($i !== 0) $inClause .= ', ';
+            if ($i !== 0) {
+                $inClause .= ', ';
+            }
             $key = $marker.'_'.$i;
             $inClause .= $key;
             $params[$key] = $value;
         }
         $inClause .= ')';
         return [$inClause, $params];
-    } 
+    }
 
     /**
      * @param string $query
@@ -195,16 +198,21 @@ class DB
         switch (gettype($value)) {
             case 'boolean':
                 $datatype = \PDO::PARAM_BOOL;
+                // no break
             case 'integer':
                 $datatype = \PDO::PARAM_INT;
+                // no break
             case 'double':
                 // doubleに対応するdatatypeがないのでSTR
                 $datatype = \PDO::PARAM_STR;
+                // no break
             case 'string':
                 $datatype = \PDO::PARAM_STR;
+                // no break
             case 'NULL':
                 $datatype = \PDO::PARAM_NULL;
-            default :
+                // no break
+            default:
                 $datatype = \PDO::PARAM_STR;
         }
         return $datatype;

@@ -21,7 +21,8 @@ class HttpClientTest extends TestCase
         self::$server->stop();
     }
 
-    public function testGet() {
+    public function testGet()
+    {
         $url = self::$server->getServerRoot() . '/get';
         $params = ['param' => 'hoge'];
         $headers = ['X-Test-Header: fuga'];
@@ -33,7 +34,8 @@ class HttpClientTest extends TestCase
         $this->assertSame('fuga', $res['HEADERS']['X-Test-Header']);
     }
 
-    public function testPost() {
+    public function testPost()
+    {
         $url = self::$server->getServerRoot() . '/post';
         $params = ['param' => 'hoge'];
         $headers = ['X-Test-Header: fuga'];

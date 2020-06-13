@@ -20,7 +20,7 @@ class LogTest extends TestCase
     }
 
     public function testDebug()
-    {  
+    {
         //$logfile = LOGS_DIR.'test-'.date("Y-m-d").'.log';
         //@unlink($logfile);
 
@@ -30,21 +30,20 @@ class LogTest extends TestCase
     }
 
     public function testInfo()
-    {  
+    {
         Log::info('info');
         $this->assertSame(true, true);
     }
 
     public function testWarn()
-    {  
+    {
         Log::warn('warn');
         $this->assertSame(true, true);
     }
 
     public function testError()
-    {  
+    {
         Log::error('error', 'obj');
         $this->assertSame(true, true);
     }
-
 }
