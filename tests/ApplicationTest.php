@@ -28,4 +28,17 @@ class ApplicationTest extends TestCase
         $this->assertSame(['path1'], $args);
     }
 
+    public function testParseConmmand()
+    {
+        $app = new Application();
+        $method = new \ReflectionMethod(get_class($app), 'parseCommand');
+        $method->setAccessible(true);
+
+        list($class, $command, $args, $opts) = $method->invoke($app, [null, 'mockCommand', 'hoge', '--env=test']);
+        $this->assertInstanceOf(mock\commands\mockCommand::class, $class);
+        $this->assertSame('mock\\commands\\mockCommand', $command);
+        $this->assertSame(['hoge'], $args);
+        $this->assertSame(['env' => 'test'], $opts);
+    }
+
 }
