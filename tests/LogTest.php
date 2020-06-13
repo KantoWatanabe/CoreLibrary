@@ -5,26 +5,46 @@ use Kore\Log;
 
 class LogTest extends TestCase
 {
+    protected function setUp(): void
+    {
+        Log::init('test');
+    }
+    
     public function testInit()
     {
         $class = new ReflectionClass('Kore\\Log');
         $property = $class->getProperty('logName');
         $property->setAccessible(true);
 
-        Log::init('test');
         $this->assertSame('test', $property->getValue());
     }
 
     public function testDebug()
     {  
-        Log::init('test');
         //$logfile = LOGS_DIR.'test-'.date("Y-m-d").'.log';
         //@unlink($logfile);
 
-        Log::debug('test!');
+        Log::debug('debug');
         $this->assertSame(true, true);
         //$this->assertFileExists($logfile);
     }
 
+    public function testInfo()
+    {  
+        Log::info('info');
+        $this->assertSame(true, true);
+    }
+
+    public function testWarn()
+    {  
+        Log::warn('warn');
+        $this->assertSame(true, true);
+    }
+
+    public function testError()
+    {  
+        Log::error('error', 'obj');
+        $this->assertSame(true, true);
+    }
 
 }
