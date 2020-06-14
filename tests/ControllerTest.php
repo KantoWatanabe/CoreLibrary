@@ -11,6 +11,7 @@ class ControllerTest extends TestCase
         $_GET['query'] = 'hoge';
         $_POST['post'] = 'fuga';
         $_COOKIE['cookie'] = 'piyo';
+        $_SERVER['HTTP_X_TEST_HEADER'] = 'hoge';
     }
 
     public function testMain()
@@ -33,6 +34,17 @@ class ControllerTest extends TestCase
         $method = new \ReflectionMethod(get_class($class), 'getMethod');
         $method->setAccessible(true);
         $this->assertSame('GET', $method->invoke($class));
+    }
+
+    /**
+     * @depends testMain
+     */
+    public function testGetHeader($class)
+    {
+        $method = new \ReflectionMethod(get_class($class), 'getHeader');
+        $method->setAccessible(true);
+        $this->assertSame('hoge', $method->invoke($class, 'X-Test-Header'));
+        $this->assertSame(null, $method->invoke($class, 'X-Test-NotFoud'));
     }
 
     /**

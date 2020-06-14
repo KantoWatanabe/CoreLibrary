@@ -81,6 +81,19 @@ abstract class Controller
      * @param string $key
      * @return string|null
      */
+    protected function getHeader($key)
+    {
+        $headerName = 'HTTP_' . str_replace('-', '_', strtoupper($key));
+        if (!isset($_SERVER[$headerName])) {
+            return null;
+        }
+        return $_SERVER[$headerName];
+    }
+
+    /**
+     * @param string $key
+     * @return string|null
+     */
     protected function getQuery($key)
     {
         if (!isset($_GET[$key])) {
