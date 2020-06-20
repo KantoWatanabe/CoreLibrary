@@ -29,21 +29,31 @@ class HttpClientTest extends TestCase
 
         $client = new HttpClient;
         $res = $client->get($url, $params, $headers);
+        $body = json_decode($res->getBody(), true);
 
-        $this->assertSame('hoge', $res['_GET']['param']);
-        $this->assertSame('fuga', $res['HEADERS']['X-Test-Header']);
+        $this->assertSame('hoge', $body['_GET']['param']);
+        $this->assertSame('fuga', $body['HEADERS']['X-Test-Header']);
     }
 
     public function testPost()
     {
-        $url = self::$server->getServerRoot() . '/post';
+        $url = self::$server->setResponseOfPath(
+            '/post',
+            new Response(
+                'response body',
+                ['Cache-Control' => 'no-cache'],
+                201
+            )
+        );
         $params = ['param' => 'hoge'];
         $headers = ['X-Test-Header: fuga'];
 
         $client = new HttpClient;
         $res = $client->post($url, $params, $headers);
+        preg_match('/Cache-Control: ([-a-zA-Z]*)/', $res->getHeader(), $matches);
 
-        $this->assertSame('hoge', $res['_POST']['param']);
-        $this->assertSame('fuga', $res['HEADERS']['X-Test-Header']);
+        $this->assertSame(201, $res->getHttpCode());
+        $this->assertSame('no-cache', $matches[1]);
+        $this->assertSame('response body', $res->getBody());
     }
 }

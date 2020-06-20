@@ -35,7 +35,7 @@ class HttpClient
      * @param array<mixed> $params
      * @param array<mixed> $headers
      * @param string|null $userpwd
-     * @return mixed
+     * @return HttpResponse|false
      */
     private function communicate($method, $url, $params = [], $headers = [], $userpwd = null)
     {
@@ -43,6 +43,7 @@ class HttpClient
 
         curl_setopt($curl, CURLOPT_CUSTOMREQUEST, $method);
         curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
+        curl_setopt($curl, CURLOPT_HEADER, true);
         curl_setopt($curl, CURLOPT_SSL_VERIFYPEER, false);
         curl_setopt($curl, CURLOPT_SSL_VERIFYHOST, false);
         if ($method === 'GET') {
@@ -65,6 +66,7 @@ class HttpClient
 
         $response = curl_exec($curl);
         $http_code = curl_getinfo($curl, CURLINFO_HTTP_CODE);
+        $header_size = curl_getinfo($curl, CURLINFO_HEADER_SIZE);
         $total_time = curl_getinfo($curl, CURLINFO_TOTAL_TIME);
 
         curl_close($curl);
@@ -75,7 +77,62 @@ class HttpClient
             return false;
         }
         /** @phpstan-ignore-next-line */
-        $result = json_decode($response, true);
-        return $result;
+        $header = substr($response, 0, $header_size);
+        /** @phpstan-ignore-next-line */
+        $body = substr($response, $header_size);
+        return new HttpResponse($http_code, $header, $body);
+    }
+}
+
+class HttpResponse
+{
+    /**
+     * @param int $httpCode
+     * @param string $header
+     * @param string $body
+     * @return void
+     */
+    public function __construct($httpCode, $header, $body)
+    {
+        $this->httpCode = $httpCode;
+        $this->header = $header;
+        $this->body = $body;
+    }
+
+    /**
+     * @var int
+     */
+    private $httpCode;
+    /**
+     * @var string
+     */
+    private $header;
+    /**
+     * @var string
+     */
+    private $body;
+
+    /**
+     * @return int
+     */
+    public function getHttpCode()
+    {
+        return $this->httpCode;
+    }
+
+    /**
+     * @return string
+     */
+    public function getHeader()
+    {
+        return $this->header;
+    }
+
+    /**
+     * @return string
+     */
+    public function getBody()
+    {
+        return $this->body;
     }
 }
