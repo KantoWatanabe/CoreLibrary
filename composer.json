@@ -29,5 +29,12 @@
         "php-coveralls/php-coveralls": "^2.2",
         "donatj/mock-webserver": "^2.1",
         "friendsofphp/php-cs-fixer": "^2.16"
+    },
+    "scripts": {
+        "check" : [
+            "vendor/bin/php-cs-fixer fix",
+            "vendor/bin/phpstan analyse",
+            "vendor/bin/phpunit"
+        ]
     }
 }
