@@ -37,7 +37,7 @@ class HttpClient
      * @param string|null $userpwd
      * @return HttpResponse|false
      */
-    private function communicate($method, $url, $params = [], $headers = [], $userpwd = null)
+    protected function communicate($method, $url, $params = [], $headers = [], $userpwd = null)
     {
         $curl = curl_init();
 
