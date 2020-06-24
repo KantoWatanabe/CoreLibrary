@@ -30,6 +30,42 @@ class HttpClient
     }
 
     /**
+     * @param string $url
+     * @param array<mixed> $params
+     * @param array<mixed> $headers
+     * @param string|null $userpwd
+     * @return mixed
+     */
+    public function put($url, $params = [], $headers = [], $userpwd = null)
+    {
+        return $this->communicate('PUT', $url, $params, $headers, $userpwd);
+    }
+
+    /**
+     * @param string $url
+     * @param array<mixed> $params
+     * @param array<mixed> $headers
+     * @param string|null $userpwd
+     * @return mixed
+     */
+    public function patch($url, $params = [], $headers = [], $userpwd = null)
+    {
+        return $this->communicate('PATCH', $url, $params, $headers, $userpwd);
+    }
+
+    /**
+     * @param string $url
+     * @param array<mixed> $params
+     * @param array<mixed> $headers
+     * @param string|null $userpwd
+     * @return mixed
+     */
+    public function delete($url, $params = [], $headers = [], $userpwd = null)
+    {
+        return $this->communicate('DELETE', $url, $params, $headers, $userpwd);
+    }
+
+    /**
      * @param string $method
      * @param string $url
      * @param array<mixed> $params
@@ -48,7 +84,7 @@ class HttpClient
         curl_setopt($curl, CURLOPT_SSL_VERIFYHOST, false);
         if ($method === 'GET') {
             curl_setopt($curl, CURLOPT_URL, $url . (strpos($url, '?') === false ? '?' : '&') . http_build_query($params));
-        } elseif ($method === 'POST') {
+        } elseif ($method === 'POST' || $method === 'PUT' || $method === 'PATCH' || $method === 'DELETE') {
             curl_setopt($curl, CURLOPT_URL, $url);
             if (in_array('Content-Type: application/json', $headers)) {
                 $data = json_encode($params);

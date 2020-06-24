@@ -56,4 +56,43 @@ class HttpClientTest extends TestCase
         $this->assertSame('no-cache', $matches[1]);
         $this->assertSame('response body', $res->getBody());
     }
+
+    public function testPut()
+    {
+        $url = self::$server->getServerRoot() . '/put';
+        $params = ['param' => 'hoge'];
+        $headers = ['Content-Type: application/json'];
+
+        $client = new HttpClient;
+        $res = $client->put($url, $params, $headers);
+        $body = json_decode($res->getBody(), true);
+
+        $this->assertSame('PUT', $body['METHOD']);
+        $this->assertSame('{"param":"hoge"}', $body['INPUT']);
+    }
+
+    public function testPatch()
+    {
+        $url = self::$server->getServerRoot() . '/patch';
+        $params = ['param' => 'hoge'];
+        $headers = ['Content-Type: application/json'];
+
+        $client = new HttpClient;
+        $res = $client->patch($url, $params, $headers);
+        $body = json_decode($res->getBody(), true);
+
+        $this->assertSame('PATCH', $body['METHOD']);
+        $this->assertSame('{"param":"hoge"}', $body['INPUT']);
+    }
+
+    public function testDelete()
+    {
+        $url = self::$server->getServerRoot() . '/delete';
+
+        $client = new HttpClient;
+        $res = $client->delete($url);
+        $body = json_decode($res->getBody(), true);
+
+        $this->assertSame('DELETE', $body['METHOD']);
+    }
 }
