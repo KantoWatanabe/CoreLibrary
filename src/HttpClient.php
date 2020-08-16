@@ -86,7 +86,7 @@ class HttpClient
             curl_setopt($curl, CURLOPT_URL, $url . (strpos($url, '?') === false ? '?' : '&') . http_build_query($params));
         } elseif ($method === 'POST' || $method === 'PUT' || $method === 'PATCH' || $method === 'DELETE') {
             curl_setopt($curl, CURLOPT_URL, $url);
-            if (in_array('Content-Type: application/json', $headers)) {
+            if (count(preg_grep("/^Content-Type: application\/json/i", $headers)) > 0) {
                 $data = json_encode($params);
             } else {
                 $data = http_build_query($params);

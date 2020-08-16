@@ -61,7 +61,7 @@ class HttpClientTest extends TestCase
     {
         $url = self::$server->getServerRoot() . '/put';
         $params = ['param' => 'hoge'];
-        $headers = ['Content-Type: application/json'];
+        $headers = ['Content-Type: application/json; charset=UTF-8'];
 
         $client = new HttpClient;
         $res = $client->put($url, $params, $headers);
