@@ -76,7 +76,7 @@ class Application
             if ($tmpController !== '') {
                 $controller = $tmpController;
             }
-            $controller = CONTROLLERS_NS.$controller;
+            $controller = CONTROLLERS_NS.'\\'.$controller;
             if (class_exists($controller)) {
                 $class = new $controller();
                 $args = array_slice($parray, $i+1);
@@ -107,7 +107,7 @@ class Application
             throw new \Exception('Unable to find command name');
         }
         
-        $command = COMMANDS_NS.str_replace('/', '\\', $argv[1]);
+        $command = COMMANDS_NS.'\\'.str_replace('/', '\\', $argv[1]);
         if (!class_exists($command)) {
             throw new \Exception('Unable to load command class ->' . $command);
         }

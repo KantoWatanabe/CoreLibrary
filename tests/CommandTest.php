@@ -7,7 +7,7 @@ class CommandTest extends TestCase
 {
     public function testMain()
     {
-        $command = COMMANDS_NS.'mockCommand';
+        $command = COMMANDS_NS.'\\mockCommand';
         $args = ['test'];
         $opts = ['env' => 'test'];
 

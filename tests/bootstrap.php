@@ -5,10 +5,8 @@ date_default_timezone_set('Asia/Tokyo');
 mb_internal_encoding('UTF-8');
 
 define('ROOT_DIR', __DIR__.'/');
-define('APP_DIR', ROOT_DIR.'mock/');
-define('APP_NS', 'mock\\');
 
-require(__DIR__.'/../src/bootstrap.php');
+Kore\bootstrap(ROOT_DIR.'mock', 'mock');
 
 // AutoLoad
 spl_autoload_register(function ($class) {

@@ -16,12 +16,12 @@ class Config
     {
         if (!self::$config) {
             $env = ($env === null) ? '' : '-'.$env;
-            $configfile = CONFIG_DIR.'config'.$env.'.php';
+            $configfile = CONFIG_DIR.'/config'.$env.'.php';
             if (!file_exists($configfile)) {
                 throw new \Exception('Unable to find config file -> ' . $configfile);
             }
             self::$config = require $configfile;
-            $commonConfig = require CONFIG_DIR.'config-common.php';
+            $commonConfig = require CONFIG_DIR.'/config-common.php';
             self::$config = array_merge(self::$config, $commonConfig);
         }
     }

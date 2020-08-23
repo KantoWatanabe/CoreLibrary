@@ -21,7 +21,7 @@ class LogTest extends TestCase
 
     public function testDebug()
     {
-        //$logfile = LOGS_DIR.'test-'.date("Y-m-d").'.log';
+        //$logfile = LOGS_DIR.'/test-'.date("Y-m-d").'.log';
         //@unlink($logfile);
 
         Log::debug('debug');

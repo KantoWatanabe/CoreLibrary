@@ -36,7 +36,7 @@ abstract class Command
         $this->opts = $opts;
         Log::init($this->commandName());
 
-        $lockfile = TMP_DIR.$this->commandName().'.lock';
+        $lockfile = TMP_DIR.'/'.$this->commandName().'.lock';
         if (file_exists($lockfile)) {
             Log::error('Process is running!');
             exit(1);

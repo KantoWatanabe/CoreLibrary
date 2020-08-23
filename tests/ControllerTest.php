@@ -16,7 +16,7 @@ class ControllerTest extends TestCase
 
     public function testMain()
     {
-        $controller = CONTROLLERS_NS.'mock';
+        $controller = CONTROLLERS_NS.'\\mock';
         $args = ['123'];
 
         $class = new $controller();

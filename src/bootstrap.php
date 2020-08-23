@@ -1,19 +1,26 @@
 <?php
+namespace Kore;
 
-// 本当はexitしたいが、testでcomposerのautoload filesした際に終了してしまうためreturnする
-if (!defined('APP_DIR') or !defined('APP_NS')) {
-    return;
+/**
+ * @param string $app_dir
+ * @param string $app_ns
+ * @return void
+ */
+function bootstrap($app_dir, $app_ns)
+{
+    define('APP_DIR', $app_dir);
+    define('APP_NS', $app_ns);
+    
+    // define directory
+    define('CONFIG_DIR', APP_DIR.'/config');
+    define('CONTROLLERS_DIR', APP_DIR.'/controllers');
+    define('COMMANDS_DIR', APP_DIR.'/commands');
+    define('VIEWS_DIR', APP_DIR.'/views');
+    define('LIBS_DIR', APP_DIR.'/libs');
+    define('TMP_DIR', APP_DIR.'/tmp');
+    define('LOGS_DIR', TMP_DIR.'/logs');
+
+    // define namespace
+    define('CONTROLLERS_NS', APP_NS.'\\controllers');
+    define('COMMANDS_NS', APP_NS.'\\commands');
 }
-
-// define directory
-define('CONFIG_DIR', APP_DIR.'config/');
-define('CONTROLLERS_DIR', APP_DIR.'controllers/');
-define('COMMANDS_DIR', APP_DIR.'commands/');
-define('VIEWS_DIR', APP_DIR.'views/');
-define('LIBS_DIR', APP_DIR.'libs/');
-define('TMP_DIR', APP_DIR.'tmp/');
-define('LOGS_DIR', TMP_DIR.'logs/');
-
-// define namespace
-define('CONTROLLERS_NS', APP_NS.'controllers\\');
-define('COMMANDS_NS', APP_NS.'commands\\');

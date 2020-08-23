@@ -161,7 +161,7 @@ abstract class Controller
      */
     protected function respondView($path, $data=[])
     {
-        require(VIEWS_DIR.$path.'.php');
+        require(VIEWS_DIR.'/'.$path.'.php');
     }
 
     /**

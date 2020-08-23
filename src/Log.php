@@ -70,7 +70,7 @@ class Log
      */
     private static function write($logLevel, $msg, $obj)
     {
-        $logfile = LOGS_DIR.self::$logName.'-'.date("Y-m-d").'.log';
+        $logfile = LOGS_DIR.'/'.self::$logName.'-'.date("Y-m-d").'.log';
         $msg .= PHP_EOL;
         if ($obj !== null) {
             ob_start();
