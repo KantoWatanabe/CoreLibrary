@@ -17,7 +17,7 @@ function bootstrap($app_dir, $app_ns)
     define('COMMANDS_DIR', APP_DIR.'/commands');
     define('VIEWS_DIR', APP_DIR.'/views');
     define('LIBS_DIR', APP_DIR.'/libs');
-    define('TMP_DIR', APP_DIR.'/tmp');
+    define('TMP_DIR', dirname(APP_DIR) .'/tmp');
     define('LOGS_DIR', TMP_DIR.'/logs');
 
     // define namespace
