@@ -34,7 +34,7 @@ abstract class Command
         $this->command = $command;
         $this->args = $args;
         $this->opts = $opts;
-        Log::init($this->commandName());
+        Log::init($this->commandName(), $this->logLevel());
 
         $lockfile = TMP_DIR.'/'.$this->commandName().'.lock';
         if (file_exists($lockfile)) {
@@ -63,6 +63,14 @@ abstract class Command
         $namespace = explode('\\', $this->command);
         /** @phpstan-ignore-next-line */
         return end($namespace);
+    }
+
+    /**
+     * @return int
+     */
+    protected function logLevel()
+    {
+        return Log::LEVEL_DEBUG;
     }
 
     /**

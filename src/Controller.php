@@ -28,7 +28,7 @@ abstract class Controller
     {
         $this->controller = $controller;
         $this->args = $args;
-        Log::init($this->moduleName());
+        Log::init($this->moduleName(), $this->logLevel());
 
         Log::info(sprintf('[START][%s]%s', $this->getMethod(), $this->controller));
         try {
@@ -47,6 +47,14 @@ abstract class Controller
     protected function moduleName()
     {
         return 'app';
+    }
+
+    /**
+     * @return int
+     */
+    protected function logLevel()
+    {
+        return Log::LEVEL_DEBUG;
     }
 
     /**
