@@ -120,4 +120,16 @@ class ControllerTest extends TestCase
         ob_end_clean();
         $this->assertSame('{"test":"hoge"}', $actual);
     }
+
+    /**
+     * @depends testMain
+     * @runInSeparateProcess
+     */
+    public function testRedirect($class)
+    {
+        $method = new \ReflectionMethod(get_class($class), 'redirect');
+        $method->setAccessible(true);
+        $method->invoke($class, 'https://github.com/KantoWatanabe/KoreLibrary');
+        $this->assertSame(true, true);
+    }
 }

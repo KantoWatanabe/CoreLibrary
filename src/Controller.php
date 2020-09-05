@@ -162,10 +162,12 @@ abstract class Controller
     /**
      * @param string $path
      * @param array<mixed> $data
+     * @param int $responseCode
      * @return void
      */
-    protected function respondView($path, $data=[])
+    protected function respondView($path, $data=[], $responseCode = 200)
     {
+        http_responseCode($responseCode);
         require(VIEWS_DIR.'/'.$path.'.php');
     }
 
@@ -185,12 +187,24 @@ abstract class Controller
 
     /**
      * @param array<mixed> $data
+     * @param int $responseCode
      * @return void
      */
-    protected function respondJson($data=[])
+    protected function respondJson($data=[], $responseCode = 200)
     {
         $json = json_encode($data);
+        http_responseCode($responseCode);
         header('Content-Type: application/json');
         echo $json;
+    }
+
+    /**
+     * @param string $url
+     * @param int $responseCode
+     * @return void
+     */
+    protected function redirect($url, $responseCode = 302)
+    {
+        header("Location: $url", true, $responseCode);
     }
 }
