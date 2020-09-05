@@ -167,7 +167,7 @@ abstract class Controller
      */
     protected function respondView($path, $data=[], $responseCode = 200)
     {
-        http_responseCode($responseCode);
+        http_response_code($responseCode);
         require(VIEWS_DIR.'/'.$path.'.php');
     }
 
@@ -193,7 +193,7 @@ abstract class Controller
     protected function respondJson($data=[], $responseCode = 200)
     {
         $json = json_encode($data);
-        http_responseCode($responseCode);
+        http_response_code($responseCode);
         header('Content-Type: application/json');
         echo $json;
     }
