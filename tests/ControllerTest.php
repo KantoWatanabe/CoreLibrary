@@ -45,6 +45,7 @@ class ControllerTest extends TestCase
         $method->setAccessible(true);
         $this->assertSame('hoge', $method->invoke($class, 'X-Test-Header'));
         $this->assertSame(null, $method->invoke($class, 'X-Test-NotFoud'));
+        $this->assertSame('default', $method->invoke($class, 'X-Test-NotFoud', 'default'));
     }
 
     /**
@@ -56,6 +57,7 @@ class ControllerTest extends TestCase
         $method->setAccessible(true);
         $this->assertSame('hoge', $method->invoke($class, 'query'));
         $this->assertSame(null, $method->invoke($class, 'notfound'));
+        $this->assertSame('default', $method->invoke($class, 'notfound', 'default'));
     }
 
     /**
@@ -67,6 +69,7 @@ class ControllerTest extends TestCase
         $method->setAccessible(true);
         $this->assertSame('fuga', $method->invoke($class, 'post'));
         $this->assertSame(null, $method->invoke($class, 'notfound'));
+        $this->assertSame('default', $method->invoke($class, 'notfound', 'default'));
     }
 
     /**
@@ -78,6 +81,7 @@ class ControllerTest extends TestCase
         $method->setAccessible(true);
         $this->assertSame('piyo', $method->invoke($class, 'cookie'));
         $this->assertSame(null, $method->invoke($class, 'notfound'));
+        $this->assertSame('default', $method->invoke($class, 'notfound', 'default'));
     }
 
     /**
@@ -89,6 +93,7 @@ class ControllerTest extends TestCase
         $method->setAccessible(true);
         $this->assertSame('123', $method->invoke($class, 0));
         $this->assertSame(null, $method->invoke($class, 1));
+        $this->assertSame('default', $method->invoke($class, 1, 'default'));
     }
 
     /**

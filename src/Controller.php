@@ -79,37 +79,40 @@ abstract class Controller
 
     /**
      * @param string $key
+     * @param mixed $default
      * @return string|null
      */
-    protected function getHeader($key)
+    protected function getHeader($key, $default = null)
     {
         $headerName = 'HTTP_' . str_replace('-', '_', strtoupper($key));
         if (!isset($_SERVER[$headerName])) {
-            return null;
+            return $default;
         }
         return $_SERVER[$headerName];
     }
 
     /**
      * @param string $key
+     * @param mixed $default
      * @return string|null
      */
-    protected function getQuery($key)
+    protected function getQuery($key, $default = null)
     {
         if (!isset($_GET[$key])) {
-            return null;
+            return $default;
         }
         return $_GET[$key];
     }
 
     /**
      * @param string $key
+     * @param mixed $default
      * @return string|null
      */
-    protected function getPost($key)
+    protected function getPost($key, $default = null)
     {
         if (!isset($_POST[$key])) {
-            return null;
+            return $default;
         }
         return $_POST[$key];
     }
@@ -129,24 +132,26 @@ abstract class Controller
 
     /**
      * @param string $key
+     * @param mixed $default
      * @return string|null
      */
-    protected function getCookie($key)
+    protected function getCookie($key, $default = null)
     {
         if (!isset($_COOKIE[$key])) {
-            return null;
+            return $default;
         }
         return $_COOKIE[$key];
     }
  
     /**
      * @param string $key
+     * @param mixed $default
      * @return string|null
      */
-    protected function getArg($key)
+    protected function getArg($key, $default = null)
     {
         if (!isset($this->args[$key])) {
-            return null;
+            return $default;
         }
         return $this->args[$key];
     }

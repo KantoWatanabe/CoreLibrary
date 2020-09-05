@@ -79,24 +79,26 @@ abstract class Command
     
     /**
      * @param string $key
+     * @param mixed $default
      * @return string|null
      */
-    protected function getArg($key)
+    protected function getArg($key, $default = null)
     {
         if (!isset($this->args[$key])) {
-            return null;
+            return $default;
         }
         return $this->args[$key];
     }
 
     /**
      * @param string $key
+     * @param mixed $default
      * @return string|null
      */
-    protected function getOpt($key)
+    protected function getOpt($key, $default = null)
     {
         if (!isset($this->opts[$key])) {
-            return null;
+            return $default;
         }
         return $this->opts[$key];
     }

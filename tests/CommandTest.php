@@ -37,6 +37,7 @@ class CommandTest extends TestCase
         $method->setAccessible(true);
         $this->assertSame('test', $method->invoke($class, 0));
         $this->assertSame(null, $method->invoke($class, 1));
+        $this->assertSame('default', $method->invoke($class, 1, 'default'));
     }
 
     /**
@@ -48,5 +49,6 @@ class CommandTest extends TestCase
         $method->setAccessible(true);
         $this->assertSame('test', $method->invoke($class, 'env'));
         $this->assertSame(null, $method->invoke($class, 'notfound'));
+        $this->assertSame('default', $method->invoke($class, 'notfound', 'default'));
     }
 }
