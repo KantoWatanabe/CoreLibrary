@@ -11,12 +11,12 @@ class Log
     /**
      * @var string
      */
-    private static $logName;
+    protected static $logName;
 
     /**
      * @var int
      */
-    private static $logLevel;
+    protected static $logLevel;
 
     /**
      * @param string $logName
@@ -83,9 +83,21 @@ class Log
      * @param mixed $obj
      * @return void
      */
-    private static function write($level, $msg, $obj)
+    protected static function write($level, $msg, $obj)
     {
         $logfile = LOGS_DIR.'/'.self::$logName.'-'.date("Y-m-d").'.log';
+        $log = self::buildLog($level, $msg, $obj);
+        file_put_contents($logfile, $log, FILE_APPEND);
+    }
+
+    /**
+     * @param string $level
+     * @param string $msg
+     * @param mixed $obj
+     * @return string
+     */
+    protected static function buildLog($level, $msg, $obj)
+    {
         $msg .= PHP_EOL;
         if ($obj !== null) {
             ob_start();
@@ -97,6 +109,6 @@ class Log
         $caller = isset($trace[2]['class']) ? sprintf('%s%s%s', $trace[2]['class'], $trace[2]['type'], $trace[2]['function']) : '';
         $log = sprintf('[%s.%s][%s][%s][%s]%s', date('Y-m-d H:i:s'), explode('.', (string)microtime(true))[1], getmypid(), $level, $caller, $msg);
         //$log = sprintf('[%s.%s][%s][%s]%s', date('Y-m-d H:i:s', $tarray[0]), $tarray[1], getmypid(), $level, $msg);
-        file_put_contents($logfile, $log, FILE_APPEND);
+        return $log;
     }
 }
