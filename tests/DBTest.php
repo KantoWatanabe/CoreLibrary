@@ -13,6 +13,12 @@ class DBTest extends TestCase
         Log::init('test');
     }
 
+    public function testClone()
+    {
+        $this->expectExceptionMessage('__clone is not allowed!');
+        $cloned = clone DB::connection();
+    }
+    
     public function testConnectionNoConfig()
     {
         $this->expectExceptionMessage('Databse config noconfig is not found!');
@@ -33,12 +39,14 @@ INSERT INTO test
     SET
         col1 = :col1,
         col2 = :col2,
-        col3 = :col3
+        col3 = :col3,
+        col4 = :col4
 SQL;
         DB::connection()->insert($query, [
             'col1' => 1,
             'col2' => 'hoge',
-            'col3' => 'fugafuga']);
+            'col3' => null,
+            'col4' => false]);
 
         $this->assertSame(true, true);
 
@@ -58,15 +66,29 @@ SQL;
         $query =<<<SQL
 UPDATE test
     SET
-        col2 = :col2
+        col3 = :col3,
+        col4 = :col4
     WHERE 
         col1 = :col1
 SQL;
         DB::connection()->update($query, [
             'col1' => 1,
-            'col2' => 'piyo']);
+            'col3' => 'fuga',
+            'col4' => true]);
 
         $this->assertSame(true, true);
+
+        // COUNT
+
+        $query =<<<SQL
+SELECT COUNT(id) FROM test
+    WHERE col3 = :col3 AND col4 = :col4
+SQL;
+        $result = DB::connection()->count($query, [
+            'col3' => 'fuga',
+            'col4' => true]);
+
+        $this->assertSame(1, $result);
 
         // DELETE
 
@@ -78,6 +100,72 @@ SQL;
             'col1' => 1]);
 
         $this->assertSame(true, true);
+    }
+
+    public function testTransaction()
+    {
+        // コミットされるか
+        DB::connection()->transaction(function () {
+            $query =<<<SQL
+INSERT INTO test
+    SET
+        col1 = :col1,
+        col2 = :col2,
+        col3 = :col3,
+        col4 = :col4
+SQL;
+            DB::connection()->insert($query, [
+                'col1' => 2,
+                'col2' => 'hoge',
+                'col3' => null,
+                'col4' => false]);
+        });
+
+        $query =<<<SQL
+SELECT COUNT(id) FROM test
+    WHERE col1 = :col1
+SQL;
+        $result = DB::connection()->count($query, [
+            'col1' => 2]);
+
+        $this->assertSame(1, $result);
+
+        $query =<<<SQL
+DELETE FROM test
+    WHERE col1 = :col1
+SQL;
+        DB::connection()->delete($query, [
+            'col1' => 2]);
+
+
+        // ロールバックされるか
+        //
+
+        DB::connection()->transaction(function () {
+            $query =<<<SQL
+INSERT INTO test
+    SET
+        col1 = :col1,
+        col2 = :col2,
+        col3 = :col3,
+        col4 = :col4
+SQL;
+            DB::connection()->insert($query, [
+                'col1' => 3,
+                'col2' => 'hoge',
+                'col3' => null,
+                'col4' => false]);
+            throw new \Exception('test error!');
+        });
+
+        $query =<<<SQL
+SELECT COUNT(id) FROM test
+    WHERE col1 = :col1
+SQL;
+        $result = DB::connection()->count($query, [
+            'col1' => 3]);
+
+        $this->assertSame(0, $result);
     }
 
     public function testGetInClause()
