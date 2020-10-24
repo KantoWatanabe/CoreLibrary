@@ -126,16 +126,22 @@ abstract class Controller
     }
 
     /**
-     * @return object|false
+     * @return string
      */
-    protected function getInput()
+    protected function getBody()
     {
-        $rawInput = file_get_contents('php://input');
-        if (!$rawInput) {
-            return false;
-        }
-        $input = json_decode($rawInput, true);
-        return $input;
+        $body = file_get_contents('php://input');
+        $body = $body !== false ? $body : '';
+        return $body;
+    }
+
+    /**
+     * @return array<mixed>
+     */
+    protected function getJsonBody()
+    {
+        $body = json_decode($this->getBody(), true);
+        return $body;
     }
 
     /**

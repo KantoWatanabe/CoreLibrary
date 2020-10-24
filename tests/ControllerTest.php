@@ -80,6 +80,26 @@ class ControllerTest extends TestCase
     /**
      * @depends testMain
      */
+    public function testGetBody($class)
+    {
+        $method = new \ReflectionMethod(get_class($class), 'getBody');
+        $method->setAccessible(true);
+        $this->assertSame('', $method->invoke($class));
+    }
+
+    /**
+     * @depends testMain
+     */
+    public function testGetJsonBody($class)
+    {
+        $method = new \ReflectionMethod(get_class($class), 'getJsonBody');
+        $method->setAccessible(true);
+        $this->assertSame(null, $method->invoke($class));
+    }
+
+    /**
+     * @depends testMain
+     */
     public function testGetCookie($class)
     {
         $method = new \ReflectionMethod(get_class($class), 'getCookie');
