@@ -23,6 +23,7 @@ class ConfigTest extends TestCase
     public function testGet($key, $expected)
     {
         $this->assertSame($expected, Config::get($key));
+        $this->assertIsArray(Config::get());
     }
 
     public function provider()
