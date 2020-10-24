@@ -23,6 +23,11 @@ class ControllerTest extends TestCase
         $class->main($controller, $args);
         $this->assertSame(true, true);
 
+        // エラーのハンドリング
+        $_GET['error'] = '1';
+        $class->main($controller, $args);
+        $this->assertSame(true, true);
+
         return $class;
     }
 

@@ -10,5 +10,9 @@ class mock extends Controller
      */
     protected function action()
     {
+        $isError = $this->getQuery('error');
+        if ($isError === '1') {
+            throw new \Exception('test error!');
+        }
     }
 }
