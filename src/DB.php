@@ -178,7 +178,7 @@ class DB
         foreach ($params as $key => $value) {
             $parameter = ":{$key}";
             $keys[] = $parameter;
-            $values[] = is_string($value) ? "'$value'" : $value;
+            $values[] = $this->debugValue($value);
             $stm->bindValue($parameter, $value, $this->dataType($value));
         }
 
@@ -188,6 +188,29 @@ class DB
         /** @phpstan-ignore-next-line */
         Log::debug(sprintf('%f - %s', $end-$start, str_replace($keys, $values, preg_replace(['/[\n\t]/', '/\s+/'], ['', ' '], $query))));
         return $stm;
+    }
+
+    /**
+     * @param mixed $value
+     * @return mixed
+     */
+    private function debugValue($value)
+    {
+        switch (gettype($value)) {
+            case 'string':
+                $debugValue = "'$value'";
+                break;
+            case 'boolean':
+                $debugValue = $value ? 'true' : 'false';
+                break;
+            case 'NULL':
+                $debugValue = 'NULL';
+                break;
+            default:
+                $debugValue = $value;
+        
+        }
+        return $debugValue;
     }
 
     /**
