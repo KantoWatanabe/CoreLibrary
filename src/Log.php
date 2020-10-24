@@ -105,8 +105,8 @@ class Log
             $msg .= ob_get_contents();
             ob_end_clean();
         }
-        $trace = debug_backtrace(DEBUG_BACKTRACE_IGNORE_ARGS, 3);
-        $caller = isset($trace[2]['class']) ? sprintf('%s%s%s', $trace[2]['class'], $trace[2]['type'], $trace[2]['function']) : '';
+        $trace = debug_backtrace(DEBUG_BACKTRACE_IGNORE_ARGS, 4);
+        $caller = isset($trace[3]['class']) ? sprintf('%s%s%s', $trace[3]['class'], $trace[3]['type'], $trace[3]['function']) : '';
         $log = sprintf('[%s.%s][%s][%s][%s]%s', date('Y-m-d H:i:s'), explode('.', (string)microtime(true))[1], getmypid(), $level, $caller, $msg);
         //$log = sprintf('[%s.%s][%s][%s]%s', date('Y-m-d H:i:s', $tarray[0]), $tarray[1], getmypid(), $level, $msg);
         return $log;
