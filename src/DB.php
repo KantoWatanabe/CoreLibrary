@@ -199,20 +199,20 @@ class DB
         switch (gettype($value)) {
             case 'boolean':
                 $datatype = \PDO::PARAM_BOOL;
-                // no break
+                break;
             case 'integer':
                 $datatype = \PDO::PARAM_INT;
-                // no break
+                break;
             case 'double':
                 // doubleに対応するdatatypeがないのでSTR
                 $datatype = \PDO::PARAM_STR;
-                // no break
+                break;
             case 'string':
                 $datatype = \PDO::PARAM_STR;
-                // no break
+                break;
             case 'NULL':
                 $datatype = \PDO::PARAM_NULL;
-                // no break
+                break;
             default:
                 $datatype = \PDO::PARAM_STR;
         }
