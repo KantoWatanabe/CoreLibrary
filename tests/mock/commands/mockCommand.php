@@ -10,5 +10,9 @@ class mockCommand extends Command
      */
     protected function exec()
     {
+        $isError = $this->getOpt('error');
+        if ($isError === '1') {
+            throw new \Exception('test error!');
+        }
     }
 }

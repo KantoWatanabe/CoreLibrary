@@ -38,8 +38,8 @@ abstract class Command
 
         $lockfile = TMP_DIR.'/'.$this->commandName().'.lock';
         if (file_exists($lockfile)) {
-            Log::error('Process is running!');
-            exit(1);
+            Log::warn('Process is running!');
+            return;
         }
         touch($lockfile);
 

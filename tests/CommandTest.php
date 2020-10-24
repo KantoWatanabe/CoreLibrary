@@ -7,11 +7,24 @@ class CommandTest extends TestCase
 {
     public function testMain()
     {
-        $command = COMMANDS_NS.'\\mockCommand';
+        $commandName = 'mockCommand';
+        $command = COMMANDS_NS."\\$commandName";
         $args = ['test'];
         $opts = ['env' => 'test'];
 
         $class = new $command();
+        $class->main($command, $args, $opts);
+        $this->assertSame(true, true);
+
+        // 多重起動チェック
+        $lockfile = TMP_DIR."/$commandName.lock";
+        touch($lockfile);
+        $class->main($command, $args, $opts);
+        $this->assertSame(true, true);
+        unlink($lockfile);
+
+        // エラーのハンドリング
+        $opts['error'] = '1';
         $class->main($command, $args, $opts);
         $this->assertSame(true, true);
 
