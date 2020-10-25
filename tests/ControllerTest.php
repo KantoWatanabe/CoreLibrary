@@ -154,7 +154,7 @@ class ControllerTest extends TestCase
     {
         $method = new \ReflectionMethod(get_class($class), 'redirect');
         $method->setAccessible(true);
-        $method->invoke($class, 'https://github.com/KantoWatanabe/KoreLibrary');
+        $method->invoke($class, 'https://github.com/KantoWatanabe/Kore');
         $this->assertSame(true, true);
     }
 }

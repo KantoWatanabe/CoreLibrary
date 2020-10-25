@@ -1,8 +1,9 @@
 {
-    "name": "kantowatanabe/korelibrary",
-    "description": "KoreLibrary is a simple and minimal library.",
+    "name": "korephp/kore",
+    "description": "Kore is a simple and minimal library.",
     "type": "library",
     "license": "MIT",
+    "keywords": ["framework"],
     "authors": [
         {
             "name": "Kanto Watanabe",
