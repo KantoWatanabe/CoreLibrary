@@ -1,6 +1,6 @@
 {
     "name": "korephp/kore",
-    "description": "Kore is a simple and minimal library.",
+    "description": "Kore is a PHP simple and minimal framework.",
     "type": "library",
     "license": "MIT",
     "keywords": ["framework"],
