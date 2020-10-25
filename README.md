@@ -7,7 +7,7 @@
 <a href='https://coveralls.io/github/KantoWatanabe/Kore?branch=master'><img src='https://coveralls.io/repos/github/KantoWatanabe/Kore/badge.svg?branch=master' alt='Coverage Status' /></a>
 </p>
 
-Kore is a simple and minimal library.
+Kore is a PHP simple and minimal library.
 
 ## Usage
 
