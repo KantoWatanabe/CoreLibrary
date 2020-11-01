@@ -98,7 +98,7 @@ class DB
      */
     public function insert($query, $params = [])
     {
-        $stm = $this->execute($query, $params);
+        $this->execute($query, $params);
 
         return $this->pdo->lastInsertId();
     }
