@@ -44,7 +44,7 @@ class Application
 
         if ($class === null) {
             http_response_code(404);
-            exit;
+            return;
         }
     
         $class->main($controller, $args);
