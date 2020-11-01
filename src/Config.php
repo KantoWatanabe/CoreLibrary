@@ -14,7 +14,7 @@ class Config
      */
     public static function create($env = null)
     {
-        if (!self::$config) {
+        if (empty(self::$config)) {
             $env = ($env === null) ? '' : '-'.$env;
             $configfile = CONFIG_DIR.'/config'.$env.'.php';
             if (!file_exists($configfile)) {
