@@ -30,6 +30,11 @@ class DBTest extends TestCase
         $this->assertInstanceOf(DB::class, DB::connection());
     }
 
+    public function testGetPdo()
+    {
+        $this->assertInstanceOf(\PDO::class, DB::connection()->getPdo());
+    }
+
     public function testCRUD()
     {
         // CREATE

@@ -66,6 +66,14 @@ class DB
     }
 
     /**
+     * @return \PDO
+     */
+    public function getPdo()
+    {
+        return $this->pdo;
+    }
+
+    /**
      * @param string $query
      * @param array<mixed> $params
      * @return array<mixed>|false
