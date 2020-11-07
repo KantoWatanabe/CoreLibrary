@@ -11,6 +11,10 @@ class Application
      * @var string
      */
     protected $defaultController = 'index';
+    /**
+     * @var callable
+     */
+    protected $notFound;
 
     /**
      * @param string $basePath ex. 'mybasepath/'
@@ -29,6 +33,17 @@ class Application
     {
         $this->defaultController = $defaultController;
     }
+
+    /**
+     * @param callable $notFound
+     * @return void
+     */
+    public function setNotFound($notFound)
+    {
+        if (is_callable($notFound)) {
+            $this->notFound = $notFound;
+        }
+    }
     
     /**
      * @param string|null $path
@@ -43,6 +58,9 @@ class Application
         list($class, $controller, $args) = $this->parseController($path);
 
         if ($class === null) {
+            if (is_callable($this->notFound)) {
+                call_user_func($this->notFound);
+            }
             http_response_code(404);
             return;
         }

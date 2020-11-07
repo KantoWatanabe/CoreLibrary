@@ -5,6 +5,36 @@ use Kore\Application;
 
 class ApplicationTest extends TestCase
 {
+    public function testSetNotFound()
+    {
+        $app = new Application();
+        $app->setNotFound(function () {
+            // NOP
+        });
+        $class = new ReflectionClass('Kore\\Application');
+        $property = $class->getProperty('notFound');
+        $property->setAccessible(true);
+        $this->assertSame(true, is_callable($property->getValue($app)));
+    }
+
+    public function testRun()
+    {
+        $app = new Application();
+
+        $_SERVER['REQUEST_URI'] = '/mock';
+        $_SERVER['REQUEST_METHOD'] = 'GET';
+        $app->run();
+        $this->assertSame(true, true);
+
+        $_SERVER['REQUEST_URI'] = '/notFound';
+        $_SERVER['REQUEST_METHOD'] = 'GET';
+        $app->setNotFound(function () {
+            // NOP
+        });
+        $app->run();
+        $this->assertSame(404, http_response_code());
+    }
+    
     public function testParseController()
     {
         $app = new Application();
