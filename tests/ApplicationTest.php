@@ -82,14 +82,24 @@ class ApplicationTest extends TestCase
     {
         $app = new Application();
 
+        $app->runCmd([null, 'mockCommand']);
+        $this->assertSame(true, true);
+    }
+
+    public function testNoCmdName()
+    {
+        $app = new Application();
+
         $this->expectExceptionMessage('Unable to find command name');
         $app->runCmd([null]);
+    }
+
+    public function testNoCmdClass()
+    {
+        $app = new Application();
 
         $this->expectExceptionMessage('Unable to load command class');
         $app->runCmd([null, 'notFound']);
-
-        $app->runCmd([null, 'mockCommand']);
-        $this->assertSame(true, true);
     }
 
     public function testParseConmmand()
