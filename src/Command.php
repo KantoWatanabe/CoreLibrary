@@ -88,10 +88,13 @@ abstract class Command
     /**
      * @param string $key
      * @param mixed $default
-     * @return string|null
+     * @return string|array<string>
      */
-    protected function getArg($key, $default = null)
+    protected function getArg($key = null, $default = null)
     {
+        if ($key === null) {
+            return $this->args;
+        }
         if (!isset($this->args[$key])) {
             return $default;
         }
@@ -101,10 +104,13 @@ abstract class Command
     /**
      * @param string $key
      * @param mixed $default
-     * @return string|null
+     * @return string|array<string>
      */
-    protected function getOpt($key, $default = null)
+    protected function getOpt($key = null, $default = null)
     {
+        if ($key === null) {
+            return $this->opts;
+        }
         if (!isset($this->opts[$key])) {
             return $default;
         }

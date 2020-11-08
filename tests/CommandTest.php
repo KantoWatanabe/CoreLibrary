@@ -51,6 +51,7 @@ class CommandTest extends TestCase
         $this->assertSame('test', $method->invoke($class, 0));
         $this->assertSame(null, $method->invoke($class, 1));
         $this->assertSame('default', $method->invoke($class, 1, 'default'));
+        $this->assertSame(['test'], $method->invoke($class));
     }
 
     /**
@@ -63,5 +64,6 @@ class CommandTest extends TestCase
         $this->assertSame('test', $method->invoke($class, 'env'));
         $this->assertSame(null, $method->invoke($class, 'notfound'));
         $this->assertSame('default', $method->invoke($class, 'notfound', 'default'));
+        $this->assertSame(['env' => 'test', 'error' => '1'], $method->invoke($class));
     }
 }
