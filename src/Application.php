@@ -54,14 +54,15 @@ class Application
         if ($path === null) {
             $path = $_SERVER['REQUEST_URI'];
         }
-        if (!empty($this->basePath) && strpos($path, $this->basePath) === 0) {
-            $path = substr($path, strlen($this->basePath));
-        }
         if (false !== $pos = strpos($path, '?')) {
             $path = substr($path, 0, $pos);
         }
         $path = rawurldecode($path);
         $path = trim($path, '/');
+        if (!empty($this->basePath) && strpos($path, $this->basePath) === 0) {
+            $path = substr($path, strlen($this->basePath));
+            $path = trim($path, '/');
+        }
 
         list($class, $controller, $args) = $this->parseController($path);
 
