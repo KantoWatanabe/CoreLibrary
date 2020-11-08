@@ -102,10 +102,13 @@ abstract class Controller
     /**
      * @param string $key
      * @param mixed $default
-     * @return string|null
+     * @return string|array<string>
      */
-    protected function getQuery($key, $default = null)
+    protected function getQuery($key = null, $default = null)
     {
+        if ($key === null) {
+            return $_GET;
+        }
         if (!isset($_GET[$key])) {
             return $default;
         }
@@ -115,10 +118,13 @@ abstract class Controller
     /**
      * @param string $key
      * @param mixed $default
-     * @return string|null
+     * @return string|array<string>
      */
-    protected function getPost($key, $default = null)
+    protected function getPost($key = null, $default = null)
     {
+        if ($key === null) {
+            return $_POST;
+        }
         if (!isset($_POST[$key])) {
             return $default;
         }
@@ -147,10 +153,13 @@ abstract class Controller
     /**
      * @param string $key
      * @param mixed $default
-     * @return string|null
+     * @return string|array<string>
      */
-    protected function getCookie($key, $default = null)
+    protected function getCookie($key = null, $default = null)
     {
+        if ($key === null) {
+            return $_COOKIE;
+        }
         if (!isset($_COOKIE[$key])) {
             return $default;
         }
@@ -160,10 +169,13 @@ abstract class Controller
     /**
      * @param string $key
      * @param mixed $default
-     * @return string|null
+     * @return string|array<string>
      */
-    protected function getArg($key, $default = null)
+    protected function getArg($key = null, $default = null)
     {
+        if ($key === null) {
+            return $this->args;
+        }
         if (!isset($this->args[$key])) {
             return $default;
         }

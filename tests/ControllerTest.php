@@ -27,6 +27,7 @@ class ControllerTest extends TestCase
         $_GET['error'] = '1';
         $class->main($controller, $args);
         $this->assertSame(true, true);
+        unset($_GET['error']);
 
         return $class;
     }
@@ -63,6 +64,7 @@ class ControllerTest extends TestCase
         $this->assertSame('hoge', $method->invoke($class, 'query'));
         $this->assertSame(null, $method->invoke($class, 'notfound'));
         $this->assertSame('default', $method->invoke($class, 'notfound', 'default'));
+        $this->assertSame(['query' => 'hoge'], $method->invoke($class));
     }
 
     /**
@@ -75,6 +77,7 @@ class ControllerTest extends TestCase
         $this->assertSame('fuga', $method->invoke($class, 'post'));
         $this->assertSame(null, $method->invoke($class, 'notfound'));
         $this->assertSame('default', $method->invoke($class, 'notfound', 'default'));
+        $this->assertSame(['post' => 'fuga'], $method->invoke($class));
     }
 
     /**
@@ -107,6 +110,7 @@ class ControllerTest extends TestCase
         $this->assertSame('piyo', $method->invoke($class, 'cookie'));
         $this->assertSame(null, $method->invoke($class, 'notfound'));
         $this->assertSame('default', $method->invoke($class, 'notfound', 'default'));
+        $this->assertSame(['cookie' => 'piyo'], $method->invoke($class));
     }
 
     /**
@@ -119,6 +123,7 @@ class ControllerTest extends TestCase
         $this->assertSame('123', $method->invoke($class, 0));
         $this->assertSame(null, $method->invoke($class, 1));
         $this->assertSame('default', $method->invoke($class, 1, 'default'));
+        $this->assertSame([0 => '123'], $method->invoke($class));
     }
 
     /**
