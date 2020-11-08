@@ -17,7 +17,7 @@ class Application
     protected $notFound;
 
     /**
-     * @param string $basePath ex. 'mybasepath/'
+     * @param string $basePath ex. 'mybasepath'
      * @return void
      */
     public function setBasePath($basePath)
@@ -54,6 +54,14 @@ class Application
         if ($path === null) {
             $path = $_SERVER['REQUEST_URI'];
         }
+        if (!empty($this->basePath) && strpos($path, $this->basePath) === 0) {
+            $path = substr($path, strlen($this->basePath));
+        }
+        if (false !== $pos = strpos($path, '?')) {
+            $path = substr($path, 0, $pos);
+        }
+        $path = rawurldecode($path);
+        $path = trim($path, '/');
 
         list($class, $controller, $args) = $this->parseController($path);
 
@@ -74,16 +82,6 @@ class Application
      */
     protected function parseController($path)
     {
-        if (false !== $pos = strpos($path, '?')) {
-            $path = substr($path, 0, $pos);
-        }
-        $path = rawurldecode($path);
-        $path = trim($path, '/');
-
-        if (!empty($this->basePath) && strpos($path, $this->basePath) === 0) {
-            $path = substr($path, strlen($this->basePath));
-        }
-    
         $parray = explode('/', $path);
     
         $class = null;
@@ -110,7 +108,15 @@ class Application
      */
     public function runCmd($argv)
     {
+        if (!isset($argv[1])) {
+            throw new \Exception('Unable to find command name');
+        }
+
         list($class, $command, $args, $opts) = $this->parseCommand($argv);
+
+        if ($class === null) {
+            throw new \Exception('Unable to load command class ->' . $command);
+        }
 
         $class->main($command, $args, $opts);
     }
@@ -121,19 +127,16 @@ class Application
      */
     protected function parseCommand($argv)
     {
-        if (!isset($argv[1])) {
-            throw new \Exception('Unable to find command name');
-        }
-        
+        $class = null;
         $command = COMMANDS_NS.'\\'.str_replace('/', '\\', $argv[1]);
-        if (!class_exists($command)) {
-            throw new \Exception('Unable to load command class ->' . $command);
-        }
-        
-        $class = new $command();
-
         $args = [];
         $opts = [];
+
+        if (!class_exists($command)) {
+            return [$class, $command, $args, $opts];
+        }
+
+        $class = new $command();
         foreach ($argv as $key => $value) {
             if ($key > 1) {
                 if (preg_match('/^--[a-zA-Z0-9]+=[a-zA-Z0-9]+$/', $value)) {

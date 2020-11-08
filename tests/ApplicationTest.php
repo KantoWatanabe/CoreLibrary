@@ -5,6 +5,26 @@ use Kore\Application;
 
 class ApplicationTest extends TestCase
 {
+    public function testSetBasePath()
+    {
+        $app = new Application();
+        $app->setBasePath('base');
+        $class = new ReflectionClass('Kore\\Application');
+        $property = $class->getProperty('basePath');
+        $property->setAccessible(true);
+        $this->assertSame('base', $property->getValue($app));
+    }
+
+    public function testSetDefaultController()
+    {
+        $app = new Application();
+        $app->setDefaultController('base');
+        $class = new ReflectionClass('Kore\\Application');
+        $property = $class->getProperty('defaultController');
+        $property->setAccessible(true);
+        $this->assertSame('base', $property->getValue($app));
+    }
+
     public function testSetNotFound()
     {
         $app = new Application();
@@ -20,17 +40,18 @@ class ApplicationTest extends TestCase
     public function testRun()
     {
         $app = new Application();
+        $app->setBasePath('base');
+        $app->setNotFound(function () {
+            // NOP
+        });
 
-        $_SERVER['REQUEST_URI'] = '/mock';
+        $_SERVER['REQUEST_URI'] = '/base/mock/?query1=test&query2=test';
         $_SERVER['REQUEST_METHOD'] = 'GET';
         $app->run();
         $this->assertSame(true, true);
 
         $_SERVER['REQUEST_URI'] = '/notFound';
         $_SERVER['REQUEST_METHOD'] = 'GET';
-        $app->setNotFound(function () {
-            // NOP
-        });
         $app->run();
         $this->assertSame(404, http_response_code());
     }
@@ -41,20 +62,34 @@ class ApplicationTest extends TestCase
         $method = new \ReflectionMethod(get_class($app), 'parseController');
         $method->setAccessible(true);
 
-        list($class, $controller, $args) = $method->invoke($app, '/mock');
+        list($class, $controller, $args) = $method->invoke($app, 'mock');
         $this->assertInstanceOf(mock\controllers\mock::class, $class);
         $this->assertSame('mock\\controllers\\mock', $controller);
         $this->assertSame([], $args);
 
-        list($class, $controller, $args) = $method->invoke($app, '/mock/path1/path2');
+        list($class, $controller, $args) = $method->invoke($app, 'mock/path1/path2');
         $this->assertInstanceOf(mock\controllers\mock::class, $class);
         $this->assertSame('mock\\controllers\\mock', $controller);
         $this->assertSame(['path1', 'path2'], $args);
 
-        list($class, $controller, $args) = $method->invoke($app, '/path1/mock/path1/');
+        list($class, $controller, $args) = $method->invoke($app, 'path1/mock/path1');
         $this->assertInstanceOf(mock\controllers\path1\mock::class, $class);
         $this->assertSame('mock\\controllers\\path1\\mock', $controller);
         $this->assertSame(['path1'], $args);
+    }
+
+    public function testRunCmd()
+    {
+        $app = new Application();
+
+        $this->expectExceptionMessage('Unable to find command name');
+        $app->runCmd([null]);
+
+        $this->expectExceptionMessage('Unable to load command class');
+        $app->runCmd([null, 'notFound']);
+
+        $app->runCmd([null, 'mockCommand']);
+        $this->assertSame(true, true);
     }
 
     public function testParseConmmand()
