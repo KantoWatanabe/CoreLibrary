@@ -66,6 +66,13 @@ SQL;
 
         $this->assertSame(1, count($result));
 
+        $query =<<<SQL
+SELECT col1, col2, col3 FROM test
+SQL;
+        $result = DB::connection()->selectFirst($query);
+
+        $this->assertSame(3, count($result));
+
         // UPDATE
 
         $query =<<<SQL

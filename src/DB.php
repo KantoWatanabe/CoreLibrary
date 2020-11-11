@@ -89,6 +89,19 @@ class DB
     /**
      * @param string $query
      * @param array<mixed> $params
+     * @return array<mixed>
+     */
+    public function selectFirst($query, $params = [])
+    {
+        $stm = $this->execute($query, $params);
+        
+        $result = $stm->fetch(\PDO::FETCH_ASSOC);
+        return $result !== false ? $result: array();
+    }
+
+    /**
+     * @param string $query
+     * @param array<mixed> $params
      * @return mixed
      */
     public function count($query, $params = [])
