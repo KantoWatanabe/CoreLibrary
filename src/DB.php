@@ -82,7 +82,7 @@ class DB
     {
         $stm = $this->execute($query, $params);
 
-        $result = $stm->fetchAll();
+        $result = $stm->fetchAll(PDO::FETCH_ASSOC);
         return $result;
     }
 
