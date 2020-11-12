@@ -99,10 +99,10 @@ class HttpClientTest extends TestCase
     /**
      * @dataProvider provider
      */
-    public function testCreateHeader($key, $expected)
+    public function testBuildHeader($key, $expected)
     {
         $client = new HttpClient;
-        $method = new \ReflectionMethod(get_class($client), 'createHeader');
+        $method = new \ReflectionMethod(get_class($client), 'buildHeader');
         $method->setAccessible(true);
         
         $this->assertSame($expected, $method->invoke($client, $key));

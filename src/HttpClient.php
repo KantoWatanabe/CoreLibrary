@@ -75,6 +75,8 @@ class HttpClient
      */
     protected function communicate($method, $url, $params = [], $headers = [], $userpwd = null)
     {
+        $headers = $this->buildHeader($headers);
+        
         $curl = curl_init();
 
         curl_setopt($curl, CURLOPT_CUSTOMREQUEST, $method);
@@ -94,7 +96,7 @@ class HttpClient
             curl_setopt($curl, CURLOPT_POSTFIELDS, $data);
         }
         if (!empty($headers)) {
-            curl_setopt($curl, CURLOPT_HTTPHEADER, $this->createHeader($headers));
+            curl_setopt($curl, CURLOPT_HTTPHEADER, $headers);
         }
         if ($userpwd !== null) {
             curl_setopt($curl, CURLOPT_USERPWD, $userpwd);
@@ -123,7 +125,7 @@ class HttpClient
      * @param array<mixed> $headers
      * @return array<string>
      */
-    protected function createHeader($headers)
+    protected function buildHeader($headers)
     {
         $h = array();
         foreach ($headers as $key => $value) {
