@@ -94,7 +94,7 @@ class HttpClient
             curl_setopt($curl, CURLOPT_POSTFIELDS, $data);
         }
         if (!empty($headers)) {
-            curl_setopt($curl, CURLOPT_HTTPHEADER, $headers);
+            curl_setopt($curl, CURLOPT_HTTPHEADER, $this->createHeader($headers));
         }
         if ($userpwd !== null) {
             curl_setopt($curl, CURLOPT_USERPWD, $userpwd);
@@ -117,6 +117,23 @@ class HttpClient
         /** @phpstan-ignore-next-line */
         $body = substr($response, $header_size);
         return new HttpResponse($http_code, $header, $body);
+    }
+
+    /**
+     * @param array<mixed> $headers
+     * @return array<string>
+     */
+    protected function createHeader($headers)
+    {
+        $h = array();
+        foreach ($headers as $key => $value) {
+            if (is_string($key)) {
+                $h[] = "$key: $value";
+            } else {
+                $h[] = $value;
+            }
+        }
+        return $h;
     }
 }
 

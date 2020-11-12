@@ -95,4 +95,24 @@ class HttpClientTest extends TestCase
 
         $this->assertSame('DELETE', $body['METHOD']);
     }
+
+    /**
+     * @dataProvider provider
+     */
+    public function testCreateHeader($key, $expected)
+    {
+        $client = new HttpClient;
+        $method = new \ReflectionMethod(get_class($client), 'createHeader');
+        $method->setAccessible(true);
+        
+        $this->assertSame($expected, $method->invoke($client, $key));
+    }
+
+    public function provider()
+    {
+        return [
+            [['X-Test-Header: fuga', 'Content-Type: application/json'], ['X-Test-Header: fuga', 'Content-Type: application/json']],
+            [['X-Test-Header' => 'fuga', 'Content-Type' => 'application/json'], ['X-Test-Header: fuga', 'Content-Type: application/json']],
+        ];
+    }
 }
