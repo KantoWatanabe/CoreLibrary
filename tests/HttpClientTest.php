@@ -29,7 +29,7 @@ class HttpClientTest extends TestCase
 
         $client = new HttpClient;
         $res = $client->get($url, $params, $headers);
-        $body = json_decode($res->getBody(), true);
+        $body = $res->getJsonBody();
 
         $this->assertSame('hoge', $body['_GET']['param']);
         $this->assertSame('fuga', $body['HEADERS']['X-Test-Header']);

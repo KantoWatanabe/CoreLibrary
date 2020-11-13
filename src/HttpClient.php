@@ -190,4 +190,12 @@ class HttpResponse
     {
         return $this->body;
     }
+    
+    /**
+     * @return array<mixed>
+     */
+    public function getJsonBody()
+    {
+        return json_decode($this->getBody(), true);
+    }
 }
