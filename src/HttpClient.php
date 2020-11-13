@@ -184,6 +184,19 @@ class HttpResponse
     }
 
     /**
+     * @param string $key
+     * @return string|null
+     */
+    public function getHeaderLine($key)
+    {
+        preg_match("/$key: ([-a-zA-Z]*)/i", $this->getHeader(), $matches);
+        if (!isset($matches[1])) {
+            return null;
+        }
+        return $matches[1];
+    }
+
+    /**
      * @return string
      */
     public function getBody()

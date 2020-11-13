@@ -54,6 +54,8 @@ class HttpClientTest extends TestCase
 
         $this->assertSame(201, $res->getHttpCode());
         $this->assertSame('no-cache', $matches[1]);
+        $this->assertSame('no-cache', $res->getHeaderLine('Cache-Control'));
+        $this->assertSame(null, $res->getHeaderLine('Not-Found'));
         $this->assertSame('response body', $res->getBody());
     }
 
