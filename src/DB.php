@@ -207,7 +207,7 @@ class DB
         $stm->execute();
         $end = microtime(true);
         /** @phpstan-ignore-next-line */
-        Log::debug(sprintf('%f - %s', $end-$start, str_replace($keys, $values, preg_replace(['/[\n\t]/', '/\s+/'], ['', ' '], $query))));
+        Log::debug(sprintf('%f - %s', $end-$start, str_replace($keys, $values, preg_replace('/[\n\t\s]+/', ' ', $query))));
         return $stm;
     }
 
