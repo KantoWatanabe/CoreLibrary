@@ -189,7 +189,7 @@ class HttpResponse
      */
     public function getHeaderLine($key)
     {
-        preg_match("/$key: ([-a-zA-Z]*)/i", $this->getHeader(), $matches);
+        preg_match("/$key: (\S*)/i", $this->getHeader(), $matches);
         if (!isset($matches[1])) {
             return null;
         }
