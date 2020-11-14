@@ -29,7 +29,7 @@ class HttpClientTest extends TestCase
 
         $client = new HttpClient;
         $res = $client->get($url, $params, $headers);
-        $body = json_decode($res->getBody(), true);
+        $body = $res->getJsonBody();
 
         $this->assertSame('hoge', $body['_GET']['param']);
         $this->assertSame('fuga', $body['HEADERS']['X-Test-Header']);
@@ -54,6 +54,8 @@ class HttpClientTest extends TestCase
 
         $this->assertSame(201, $res->getHttpCode());
         $this->assertSame('no-cache', $matches[1]);
+        $this->assertSame('no-cache', $res->getHeaderLine('Cache-Control'));
+        $this->assertSame(null, $res->getHeaderLine('Not-Found'));
         $this->assertSame('response body', $res->getBody());
     }
 
@@ -94,5 +96,25 @@ class HttpClientTest extends TestCase
         $body = json_decode($res->getBody(), true);
 
         $this->assertSame('DELETE', $body['METHOD']);
+    }
+
+    /**
+     * @dataProvider provider
+     */
+    public function testBuildHeader($key, $expected)
+    {
+        $client = new HttpClient;
+        $method = new \ReflectionMethod(get_class($client), 'buildHeader');
+        $method->setAccessible(true);
+        
+        $this->assertSame($expected, $method->invoke($client, $key));
+    }
+
+    public function provider()
+    {
+        return [
+            [['X-Test-Header: fuga', 'Content-Type: application/json'], ['X-Test-Header: fuga', 'Content-Type: application/json']],
+            [['X-Test-Header' => 'fuga', 'Content-Type' => 'application/json'], ['X-Test-Header: fuga', 'Content-Type: application/json']],
+        ];
     }
 }

@@ -75,6 +75,8 @@ class HttpClient
      */
     protected function communicate($method, $url, $params = [], $headers = [], $userpwd = null)
     {
+        $headers = $this->buildHeader($headers);
+        
         $curl = curl_init();
 
         curl_setopt($curl, CURLOPT_CUSTOMREQUEST, $method);
@@ -117,6 +119,23 @@ class HttpClient
         /** @phpstan-ignore-next-line */
         $body = substr($response, $header_size);
         return new HttpResponse($http_code, $header, $body);
+    }
+
+    /**
+     * @param array<mixed> $headers
+     * @return array<string>
+     */
+    protected function buildHeader($headers)
+    {
+        $h = array();
+        foreach ($headers as $key => $value) {
+            if (is_string($key)) {
+                $h[] = "$key: $value";
+            } else {
+                $h[] = $value;
+            }
+        }
+        return $h;
     }
 }
 
@@ -165,10 +184,31 @@ class HttpResponse
     }
 
     /**
+     * @param string $key
+     * @return string|null
+     */
+    public function getHeaderLine($key)
+    {
+        preg_match("/$key: (\S*)/i", $this->getHeader(), $matches);
+        if (!isset($matches[1])) {
+            return null;
+        }
+        return $matches[1];
+    }
+
+    /**
      * @return string
      */
     public function getBody()
     {
         return $this->body;
+    }
+    
+    /**
+     * @return array<mixed>
+     */
+    public function getJsonBody()
+    {
+        return json_decode($this->getBody(), true);
     }
 }
