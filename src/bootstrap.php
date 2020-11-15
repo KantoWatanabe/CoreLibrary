@@ -1,9 +1,16 @@
 <?php
+/**
+ * Kore : Simple And Minimal Framework
+ *
+ */
+
 namespace Kore;
 
 /**
- * @param string $app_dir
- * @param string $app_ns
+ * Initialize the application
+ * 
+ * @param string $app_dir Application Directory
+ * @param string $app_ns Application NameSpace
  * @return void
  */
 function bootstrap($app_dir, $app_ns)
