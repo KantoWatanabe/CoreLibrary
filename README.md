@@ -12,7 +12,8 @@ Kore is a PHP simple and minimal framework.
 
 ## Usage
 
-[Kore-Skeleton](https://github.com/KantoWatanabe/Kore-Skeleton)
+- [Documentation](https://kantowatanabe.github.io/Kore-Docs/namespaces/Kore.html)
+- [Skeleton Project](https://github.com/KantoWatanabe/Kore-Skeleton)
 
 ## Installation
 
