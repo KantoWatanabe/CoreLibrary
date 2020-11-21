@@ -1,23 +1,48 @@
 <?php
+/**
+ * Kore : Simple And Minimal Framework
+ *
+ */
+
 namespace Kore;
 
+/**
+ * Application class
+ *
+ * Running web and cli applications.
+ */
 class Application
 {
     /**
+     * Base path
+     *
+     * Excluded when parsing the controller namespace.
+     * Used in running web applications.
      * @var string
      */
     protected $basePath = '';
     /**
+     * Default controller
+     *
+     * Called if the controller is not specified.
+     * If unspecified, the default is 'index'.
+     * Used in running web applications.
      * @var string
      */
     protected $defaultController = 'index';
     /**
+     * Not found handler
+     *
+     * Called when the controller is not found.
+     * Used in running web applications.
      * @var callable
      */
     protected $notFound;
 
     /**
-     * @param string $basePath ex. 'mybasepath'
+     * Set the base path
+     *
+     * @param string $basePath bath path ex. 'mybasepath'
      * @return void
      */
     public function setBasePath($basePath)
@@ -26,7 +51,9 @@ class Application
     }
 
     /**
-     * @param string $defaultController
+     * Set the default controller
+     *
+     * @param string $defaultController default controller
      * @return void
      */
     public function setDefaultController($defaultController)
@@ -35,7 +62,9 @@ class Application
     }
 
     /**
-     * @param callable $notFound
+     * Set the not found handler
+     *
+     * @param callable $notFound not found handler
      * @return void
      */
     public function setNotFound($notFound)
@@ -46,7 +75,9 @@ class Application
     }
     
     /**
-     * @param string|null $path
+     * Running web applications
+     *
+     * @param string|null $path request path
      * @return void
      */
     public function run($path = null)
@@ -78,8 +109,15 @@ class Application
     }
 
     /**
-     * @param string $path
-     * @return array<mixed>
+     * Parse the controller namespace from the request path
+     *
+     * @param string $path request path
+     * @return array<mixed> controller information
+     *                      array(
+     *                          controller class instance,
+     *                          controller namespace,
+     *                          path arguments
+     *                      )
      */
     protected function parseController($path)
     {
@@ -104,8 +142,11 @@ class Application
     }
 
     /**
-     * @param array<string> $argv
+     * Running cli applications
+     *
+     * @param array<string> $argv command line argument
      * @return void
+     * @throws \Exception thrown when the command class is not found.
      */
     public function runCmd($argv)
     {
@@ -123,8 +164,16 @@ class Application
     }
 
     /**
-     * @param array<string> $argv
-     * @return array<mixed>
+     * Parse the command namespace from the command line argument
+     *
+     * @param array<string> $argv command line argument
+     * @return array<mixed> command information
+     *                      array(
+     *                          commadn class instance,
+     *                          command namespace,
+     *                          arguments,
+     *                          options
+     *                      )
      */
     protected function parseCommand($argv)
     {
