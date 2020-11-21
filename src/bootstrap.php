@@ -8,7 +8,7 @@ namespace Kore;
 
 /**
  * Initialize the application
- * 
+ *
  * @param string $app_dir Application Directory
  * @param string $app_ns Application NameSpace
  * @return void
