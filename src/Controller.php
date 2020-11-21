@@ -1,27 +1,45 @@
 <?php
+/**
+ * Kore : Simple And Minimal Framework
+ *
+ */
+
 namespace Kore;
 
 use Kore\Log;
 
+/**
+ * Controller class
+ *
+ */
 abstract class Controller
 {
     /**
+     * controller namespace
+     *
      * @var string
      */
     protected $controller;
     /**
+     * path arguments
+     *
      * @var array<string>
      */
     protected $args = [];
 
     /**
+     * Action
+     *
+     * The action is implemented in subclasses.
      * @return void
      */
     abstract protected function action();
 
     /**
-     * @param string $controller
-     * @param array<string> $args
+     * Main Processing
+     *
+     * @param string $controller controller namespace
+     * @param array<string> $args path arguments
      * @return void
      */
     public function main($controller, $args)
@@ -42,7 +60,11 @@ abstract class Controller
     }
 
     /**
-     * @return string
+     * Get the the module name
+     *
+     * The default is 'app'.
+     * If you need to customize, please override it with subclasses.
+     * @return string module name
      */
     protected function moduleName()
     {
@@ -50,7 +72,12 @@ abstract class Controller
     }
 
     /**
-     * @return int
+     * Get the the log level
+     *
+     * The default is Log::LEVEL_DEBUG.
+     * If you need to customize, please override it with subclasses.
+     * @return int log level
+     * @see \Kore\Log
      */
     protected function logLevel()
     {
@@ -58,6 +85,9 @@ abstract class Controller
     }
 
     /**
+     * Preprocessing of the action
+     *
+     * If you need to customize, please override it with subclasses.
      * @return void
      */
     protected function preaction()
@@ -66,7 +96,10 @@ abstract class Controller
     }
 
     /**
-     * @param \Exception $e
+     * Handling Errors
+     *
+     * If you need to customize the handling of errors, please override it with subclasses.
+     * @param \Exception $e errors
      * @return void
      */
     protected function handleError($e)
@@ -74,11 +107,10 @@ abstract class Controller
         // Override if necessary
     }
 
-    // Request Method
-    //
-
     /**
-     * @return string
+     * Get the http method
+     *
+     * @return string http method
      */
     protected function getMethod()
     {
@@ -86,9 +118,11 @@ abstract class Controller
     }
 
     /**
-     * @param string $key
-     * @param mixed $default
-     * @return string|null
+     * Get the http header
+     *
+     * @param string $key header key
+     * @param mixed $default default value if there is no value specified in the key
+     * @return string|null http header
      */
     protected function getHeader($key, $default = null)
     {
@@ -100,9 +134,12 @@ abstract class Controller
     }
 
     /**
-     * @param string $key
-     * @param mixed $default
-     * @return string|array<string>
+     * Get the query parameters
+     *
+     * If no key is specified, all query parameters are returned.
+     * @param string $key query parameters key
+     * @param mixed $default default value if there is no value specified in the key
+     * @return string|array<string> query parameters
      */
     protected function getQuery($key = null, $default = null)
     {
@@ -116,9 +153,12 @@ abstract class Controller
     }
 
     /**
-     * @param string $key
-     * @param mixed $default
-     * @return string|array<string>
+     * Get the post parameters
+     *
+     * If no key is specified, all post parameters are returned.
+     * @param string $key post parameters key
+     * @param mixed $default default value if there is no value specified in the key
+     * @return string|array<string> post parameters
      */
     protected function getPost($key = null, $default = null)
     {
@@ -132,7 +172,9 @@ abstract class Controller
     }
 
     /**
-     * @return string
+     * Get the body data
+     *
+     * @return string body data
      */
     protected function getBody()
     {
@@ -142,7 +184,9 @@ abstract class Controller
     }
 
     /**
-     * @return array<mixed>
+     * Get the body data in json format
+     *
+     * @return array<mixed> body data
      */
     protected function getJsonBody()
     {
@@ -151,9 +195,12 @@ abstract class Controller
     }
 
     /**
-     * @param string $key
-     * @param mixed $default
-     * @return string|array<string>
+     * Get the cookie parameters
+     *
+     * If no key is specified, all cookie parameters are returned.
+     * @param string $key cookie parameters key
+     * @param mixed $default default value if there is no value specified in the key
+     * @return string|array<string> cookie parameters
      */
     protected function getCookie($key = null, $default = null)
     {
@@ -167,9 +214,12 @@ abstract class Controller
     }
  
     /**
-     * @param string $key
-     * @param mixed $default
-     * @return string|array<string>
+     * Get the path arguments
+     *
+     * If no key is specified, all path arguments are returned.
+     * @param string $key path arguments key
+     * @param mixed $default default value if there is no value specified in the key
+     * @return string|array<string> path arguments
      */
     protected function getArg($key = null, $default = null)
     {
@@ -182,13 +232,12 @@ abstract class Controller
         return $this->args[$key];
     }
 
-    // Response Method
-    //
-
     /**
-     * @param string $path
-     * @param array<mixed> $data
-     * @param int $responseCode
+     * Respond in view format
+     *
+     * @param string $path view file path
+     * @param array<mixed> $data response data
+     * @param int $responseCode http status code, the default is 200
      * @return void
      */
     protected function respondView($path, $data=[], $responseCode = 200)
@@ -198,9 +247,11 @@ abstract class Controller
     }
 
     /**
-     * @param string $path
-     * @param array<mixed> $data
-     * @return string|false
+     * Extract the view
+     *
+     * @param string $path view file path
+     * @param array<mixed> $data response data
+     * @return string|false view
      */
     protected function extractView($path, $data=[])
     {
@@ -212,8 +263,10 @@ abstract class Controller
     }
 
     /**
-     * @param array<mixed> $data
-     * @param int $responseCode
+     * Respond in json format
+     *
+     * @param array<mixed> $data response data
+     * @param int $responseCode http status code, the default is 200
      * @return void
      */
     protected function respondJson($data=[], $responseCode = 200)
@@ -225,8 +278,10 @@ abstract class Controller
     }
 
     /**
-     * @param string $url
-     * @param int $responseCode
+     * Redirect
+     *
+     * @param string $url redirect url
+     * @param int $responseCode http status code, the default is 302
      * @return void
      */
     protected function redirect($url, $responseCode = 302)
