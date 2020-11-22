@@ -1,6 +1,15 @@
 <?php
+/**
+ * Kore : Simple And Minimal Framework
+ *
+ */
+
 namespace Kore;
 
+/**
+ * Log class
+ *
+ */
 class Log
 {
     const LEVEL_DEBUG = 10;
@@ -9,18 +18,24 @@ class Log
     const LEVEL_ERROR = 40;
 
     /**
+     * log name
+     *
      * @var string
      */
     protected static $logName;
 
     /**
+     * log level
+     *
      * @var int
      */
     protected static $logLevel;
 
     /**
-     * @param string $logName
-     * @param int $logLevel
+     * Initialize
+     *
+     * @param string $logName log name, the default is 'app'
+     * @param int $logLevel log level, the default is LEVEL_DEBUG
      * @return void
      */
     public static function init($logName = 'app', $logLevel = self::LEVEL_DEBUG)
@@ -30,8 +45,10 @@ class Log
     }
 
     /**
-     * @param string $msg
-     * @param mixed $obj
+     * Debug output
+     *
+     * @param string $msg message
+     * @param mixed $obj object
      * @return void
      */
     public static function debug($msg, $obj = null)
@@ -42,8 +59,10 @@ class Log
     }
 
     /**
-     * @param string $msg
-     * @param mixed $obj
+     * Information output
+     *
+     * @param string $msg message
+     * @param mixed $obj object
      * @return void
      */
     public static function info($msg, $obj = null)
@@ -54,8 +73,10 @@ class Log
     }
 
     /**
-     * @param string $msg
-     * @param mixed $obj
+     * Warning output
+     *
+     * @param string $msg message
+     * @param mixed $obj object
      * @return void
      */
     public static function warn($msg, $obj = null)
@@ -66,8 +87,10 @@ class Log
     }
 
     /**
-     * @param string $msg
-     * @param mixed $obj
+     * Error output
+     *
+     * @param string $msg message
+     * @param mixed $obj object
      * @return void
      */
     public static function error($msg, $obj = null)
@@ -78,9 +101,11 @@ class Log
     }
 
     /**
-     * @param string $level
-     * @param string $msg
-     * @param mixed $obj
+     * Write logs
+     *
+     * @param string $level level name
+     * @param string $msg message
+     * @param mixed $obj object
      * @return void
      */
     protected static function write($level, $msg, $obj)
@@ -91,10 +116,12 @@ class Log
     }
 
     /**
-     * @param string $level
-     * @param string $msg
-     * @param mixed $obj
-     * @return string
+     * Build logs
+     *
+     * @param string $level level name
+     * @param string $msg message
+     * @param mixed $obj object
+     * @return string logs
      */
     protected static function buildLog($level, $msg, $obj)
     {
