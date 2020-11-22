@@ -1,16 +1,28 @@
 <?php
+/**
+ * Kore : Simple And Minimal Framework
+ *
+ */
+
 namespace Kore;
 
 use Kore\Log;
 
+/**
+ * HttpClient class
+ *
+ */
 class HttpClient
 {
     /**
-     * @param string $url
-     * @param array<mixed> $params
-     * @param array<mixed> $headers
-     * @param string|null $userpwd
-     * @return mixed
+     * GET Communication
+     *
+     * @param string $url request url
+     * @param array<mixed> $params request parameters
+     * @param array<mixed> $headers request headers
+     * @param string|null $userpwd user name and password
+     * @return HttpResponse|false \Kore\HttpResponse
+     * @see \Kore\HttpResponse
      */
     public function get($url, $params = [], $headers = [], $userpwd = null)
     {
@@ -18,11 +30,14 @@ class HttpClient
     }
 
     /**
-     * @param string $url
-     * @param array<mixed> $params
-     * @param array<mixed> $headers
-     * @param string|null $userpwd
-     * @return mixed
+     * POST Communication
+     *
+     * @param string $url request url
+     * @param array<mixed> $params request parameters
+     * @param array<mixed> $headers request headers
+     * @param string|null $userpwd user name and password
+     * @return HttpResponse|false \Kore\HttpResponse
+     * @see \Kore\HttpResponse
      */
     public function post($url, $params = [], $headers = [], $userpwd = null)
     {
@@ -30,11 +45,14 @@ class HttpClient
     }
 
     /**
-     * @param string $url
-     * @param array<mixed> $params
-     * @param array<mixed> $headers
-     * @param string|null $userpwd
-     * @return mixed
+     * PUT Communication
+     *
+     * @param string $url request url
+     * @param array<mixed> $params request parameters
+     * @param array<mixed> $headers request headers
+     * @param string|null $userpwd user name and password
+     * @return HttpResponse|false
+     * @see \Kore\HttpResponse
      */
     public function put($url, $params = [], $headers = [], $userpwd = null)
     {
@@ -42,11 +60,14 @@ class HttpClient
     }
 
     /**
-     * @param string $url
-     * @param array<mixed> $params
-     * @param array<mixed> $headers
-     * @param string|null $userpwd
-     * @return mixed
+     * PATCH Communication
+     *
+     * @param string $url request url
+     * @param array<mixed> $params request parameters
+     * @param array<mixed> $headers request headers
+     * @param string|null $userpwd user name and password
+     * @return HttpResponse|false \Kore\HttpResponse
+     * @see \Kore\HttpResponse
      */
     public function patch($url, $params = [], $headers = [], $userpwd = null)
     {
@@ -54,11 +75,14 @@ class HttpClient
     }
 
     /**
-     * @param string $url
-     * @param array<mixed> $params
-     * @param array<mixed> $headers
-     * @param string|null $userpwd
-     * @return mixed
+     * DELETE Communication
+     *
+     * @param string $url request url
+     * @param array<mixed> $params request parameters
+     * @param array<mixed> $headers request headers
+     * @param string|null $userpwd user name and password
+     * @return HttpResponse|false \Kore\HttpResponse
+     * @see \Kore\HttpResponse
      */
     public function delete($url, $params = [], $headers = [], $userpwd = null)
     {
@@ -66,12 +90,15 @@ class HttpClient
     }
 
     /**
-     * @param string $method
-     * @param string $url
-     * @param array<mixed> $params
-     * @param array<mixed> $headers
-     * @param string|null $userpwd
-     * @return HttpResponse|false
+     * Communication Processing
+     *
+     * @param string $method http method
+     * @param string $url request url
+     * @param array<mixed> $params request parameters
+     * @param array<mixed> $headers request headers
+     * @param string|null $userpwd user name and password
+     * @return HttpResponse|false \Kore\HttpResponse
+     * @see \Kore\HttpResponse
      */
     protected function communicate($method, $url, $params = [], $headers = [], $userpwd = null)
     {
@@ -122,8 +149,11 @@ class HttpClient
     }
 
     /**
-     * @param array<mixed> $headers
-     * @return array<string>
+     * Build headers
+     *
+     * Build the associative array headers into a curl-friendly format.
+     * @param array<mixed> $headers headers
+     * @return array<string> built headers
      */
     protected function buildHeader($headers)
     {
@@ -139,12 +169,18 @@ class HttpClient
     }
 }
 
+/**
+ * HttpResponse class
+ *
+ */
 class HttpResponse
 {
     /**
-     * @param int $httpCode
-     * @param string $header
-     * @param string $body
+     * __construct method
+     *
+     * @param int $httpCode http status code
+     * @param string $header response headers
+     * @param string $body response body
      * @return void
      */
     public function __construct($httpCode, $header, $body)
@@ -155,20 +191,28 @@ class HttpResponse
     }
 
     /**
+     * http status code
+     *
      * @var int
      */
     private $httpCode;
     /**
+     * response headers
+     *
      * @var string
      */
     private $header;
     /**
+     * response body
+     *
      * @var string
      */
     private $body;
 
     /**
-     * @return int
+     * Get the http status code
+     *
+     * @return int http status code
      */
     public function getHttpCode()
     {
@@ -176,7 +220,9 @@ class HttpResponse
     }
 
     /**
-     * @return string
+     * Get the response headers
+     *
+     * @return string response headers
      */
     public function getHeader()
     {
@@ -184,8 +230,10 @@ class HttpResponse
     }
 
     /**
-     * @param string $key
-     * @return string|null
+     * Get the header value by specifying the header name
+     *
+     * @param string $key header name
+     * @return string|null header value
      */
     public function getHeaderLine($key)
     {
@@ -197,7 +245,9 @@ class HttpResponse
     }
 
     /**
-     * @return string
+     * Get the response body
+     *
+     * @return string response body
      */
     public function getBody()
     {
@@ -205,7 +255,9 @@ class HttpResponse
     }
     
     /**
-     * @return array<mixed>
+     * Get the response body in json format
+     *
+     * @return array<mixed> response body
      */
     public function getJsonBody()
     {

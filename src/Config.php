@@ -1,16 +1,35 @@
 <?php
+/**
+ * Kore : Simple And Minimal Framework
+ *
+ */
+
 namespace Kore;
 
+/**
+ * Config class
+ *
+ * Managing the configurations
+ */
 class Config
 {
     /**
+     * configurations
+     *
+     * An array of configuration values loaded from the configuration file.
      * @var array<mixed>
      */
     private static $config;
 
     /**
-     * @param string|null $env
+     * Creating the configurations
+     *
+     * Load the configurations from CONFIG_DIR/config-config-$env.php.
+     * If the environment is not specified, load the configurations from CONFIG_DIR/config.php.
+     * Environment-independent configurations are defined in CONFIG_DIR/config-common.php.
+     * @param string|null $env environment
      * @return void
+     * @throws \Exception thrown when the configuration file does not exist
      */
     public static function create($env = null)
     {
@@ -27,9 +46,12 @@ class Config
     }
 
     /**
-     * @param string|null $key
-     * @param mixed $default
-     * @return mixed
+     * Get the configurations
+     *
+     * If no key is specified, all configurations are returned.
+     * @param string|null $key configuration key
+     * @param mixed $default default value if there is no value specified in the key
+     * @return mixed configurations
      */
     public static function get($key = null, $default = null)
     {
