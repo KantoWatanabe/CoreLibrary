@@ -226,7 +226,7 @@ class DB
                 $inClause .= ', ';
             }
             $key = $marker.'_'.$i;
-            $inClause .= $key;
+            $inClause .= ':'.$key;
             $params[$key] = $value;
         }
         $inClause .= ')';
