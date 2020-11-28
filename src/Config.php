@@ -49,6 +49,7 @@ class Config
      * Get the configurations
      *
      * If no key is specified, all configurations are returned.
+     * If the key is passed dot-delimited, it is interpreted as an array path.
      * @param string|null $key configuration key
      * @param mixed $default default value if there is no value specified in the key
      * @return mixed configurations
@@ -58,9 +59,15 @@ class Config
         if ($key === null) {
             return self::$config;
         }
-        if (!isset(self::$config[$key])) {
-            return $default;
+        $data = self::$config;
+        $keys = explode('.', $key);
+        foreach ($keys as $k) {
+            if (isset($data[$k])) {
+                $data = $data[$k];
+            } else {
+                return $default;
+            }
         }
-        return self::$config[$key];
+        return $data;
     }
 }

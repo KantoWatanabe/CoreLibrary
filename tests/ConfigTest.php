@@ -32,6 +32,9 @@ class ConfigTest extends TestCase
             ["test", "test config"],
             ["common", "common config"],
             ["noconfig", null],
+            ["hoge.fuga.piyo", "hogefugapiyo"],
+            ["hoge.fuga", array("piyo" => "hogefugapiyo")],
+            ["hoge.fuga.piyo2", null],
         ];
     }
 }

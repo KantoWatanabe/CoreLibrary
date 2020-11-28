@@ -9,4 +9,10 @@ return [
         , "user" => $GLOBALS['DB_USER']
         , "pass" => $GLOBALS['DB_PASS']
     ]
+
+    , "hoge" => [
+        "fuga" => [
+            "piyo" => "hogefugapiyo"
+        ]
+    ]
 ];
