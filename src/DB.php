@@ -193,13 +193,43 @@ class DB
     public function transaction($callback)
     {
         try {
-            $this->pdo->beginTransaction();
+            $this->beginTransaction();
             $callback();
-            $this->pdo->commit();
+            $this->commit();
         } catch (\Exception $e) {
             Log::error($e->getMessage());
-            $this->pdo->rollback();
+            $this->rollback();
         }
+    }
+
+    /**
+     * Begin transaction
+     *
+     * @return void
+     */
+    public function beginTransaction()
+    {
+        $this->pdo->beginTransaction();
+    }
+
+    /**
+     * Commit
+     *
+     * @return void
+     */
+    public function commit()
+    {
+        $this->pdo->commit();
+    }
+
+    /**
+     * Rollback
+     *
+     * @return void
+     */
+    public function rollback()
+    {
+        $this->pdo->rollback();
     }
 
     /**
