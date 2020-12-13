@@ -1,12 +1,17 @@
-<phpunit bootstrap="tests/bootstrap.php">
-  <filter>
-    <whitelist processUncoveredFilesFromWhitelist="true">
+<?xml version="1.0"?>
+<phpunit xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" bootstrap="tests/bootstrap.php" xsi:noNamespaceSchemaLocation="https://schema.phpunit.de/9.3/phpunit.xsd">
+  <coverage processUncoveredFiles="true">
+    <include>
       <directory suffix=".php">src</directory>
-      <exclude>
-        <directory suffix="bootstrap.php">src/</directory>
-      </exclude>
-    </whitelist>
-  </filter>
+    </include>
+    <exclude>
+      <directory suffix="bootstrap.php">src/</directory>
+    </exclude>
+    <report>
+      <clover outputFile="build/logs/clover.xml"/>
+    </report>
+  </coverage>
+  <logging/>
   <testsuites>
     <testsuite name="kore">
       <directory>tests</directory>
