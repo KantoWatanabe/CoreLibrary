@@ -43,4 +43,4 @@ jobs:
       run: sudo /etc/init.d/mysql start && mysql -uroot -h127.0.0.1 -proot < tests/test.sql
       
     - name: Run test suite
-      run: vendor/bin/phpunit
+      run: composer run-script check
