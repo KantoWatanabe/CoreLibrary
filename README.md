@@ -1,6 +1,7 @@
 # Kore
 
 <p align="left">
+<a href="https://github.com/KantoWatanabe/Kore/actions?query=workflow%3A%22PHP+Composer%22"><img src="https://github.com/KantoWatanabe/Kore/workflows/PHP%20Composer/badge.svg" alt="PHP Composer"></a>
 <a href="https://travis-ci.org/KantoWatanabe/Kore"><img src="https://travis-ci.org/KantoWatanabe/Kore.svg?branch=master" alt="Build Status"></a>
 <a href="https://packagist.org/packages/korephp/kore"><img src="https://poser.pugx.org/korephp/kore/v/stable.svg" alt="Latest Stable Version"></a>
 <a href="https://packagist.org/packages/korephp/kore"><img src="https://poser.pugx.org/korephp/kore/license.svg" alt="License"></a>
