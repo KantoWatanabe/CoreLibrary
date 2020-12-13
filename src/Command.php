@@ -85,8 +85,7 @@ abstract class Command
     protected function commandName()
     {
         $namespace = explode('\\', $this->command);
-        /** @phpstan-ignore-next-line */
-        return end($namespace);
+        return $namespace[count($namespace) - 1];
     }
 
     /**
