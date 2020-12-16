@@ -260,7 +260,7 @@ class DB
             $params[$key] = $value;
         }
         $inClause .= ')';
-        return [$inClause, $params];
+        return array($inClause, $params);
     }
 
     /**
