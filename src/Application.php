@@ -183,7 +183,7 @@ class Application
         $opts = array();
 
         if (!class_exists($command)) {
-            return [$class, $command, $args, $opts];
+            return array($class, $command, $args, $opts);
         }
 
         $class = new $command();
