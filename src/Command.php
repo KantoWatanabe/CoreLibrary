@@ -25,13 +25,13 @@ abstract class Command
      *
      * @var array<string>
      */
-    protected $args = [];
+    protected $args = array();
     /**
      * command options
      *
      * @var array<string>
      */
-    protected $opts = [];
+    protected $opts = array();
 
     /**
      * Processing Execution

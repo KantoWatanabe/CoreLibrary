@@ -53,7 +53,7 @@ class DB
      */
     public static function connection($dbconfig='database')
     {
-        static $instances = [];
+        static $instances = array();
         if (empty($instances[$dbconfig])) {
             $instances[$dbconfig] = new static($dbconfig);
         }
@@ -103,7 +103,7 @@ class DB
      * @param array<mixed> $params SQL query parameters
      * @return array<mixed> query results
      */
-    public function select($query, $params = [])
+    public function select($query, $params = array())
     {
         $stm = $this->execute($query, $params);
 
@@ -118,7 +118,7 @@ class DB
      * @param array<mixed> $params SQL query parameters
      * @return array<mixed> query results
      */
-    public function selectFirst($query, $params = [])
+    public function selectFirst($query, $params = array())
     {
         $stm = $this->execute($query, $params);
         
@@ -133,7 +133,7 @@ class DB
      * @param array<mixed> $params SQL query parameters
      * @return mixed query results
      */
-    public function count($query, $params = [])
+    public function count($query, $params = array())
     {
         $stm = $this->execute($query, $params);
 
@@ -148,7 +148,7 @@ class DB
      * @param array<mixed> $params SQL query parameters
      * @return string last insert ID
      */
-    public function insert($query, $params = [])
+    public function insert($query, $params = array())
     {
         $this->execute($query, $params);
 
@@ -162,7 +162,7 @@ class DB
      * @param array<mixed> $params SQL query parameters
      * @return int number of updated records
      */
-    public function update($query, $params = [])
+    public function update($query, $params = array())
     {
         $stm = $this->execute($query, $params);
 
@@ -176,7 +176,7 @@ class DB
      * @param array<mixed> $params SQL query parameters
      * @return int number of deleted records
      */
-    public function delete($query, $params = [])
+    public function delete($query, $params = array())
     {
         $stm = $this->execute($query, $params);
 
@@ -250,7 +250,7 @@ class DB
     public static function getInClause($marker, $values)
     {
         $inClause = 'IN (';
-        $params = [];
+        $params = array();
         foreach ($values as $i => $value) {
             if ($i !== 0) {
                 $inClause .= ', ';
@@ -274,8 +274,8 @@ class DB
     {
         $stm = $this->pdo->prepare($query);
 
-        $keys = [];
-        $values = [];
+        $keys = array();
+        $values = array();
         foreach ($params as $key => $value) {
             $parameter = ":{$key}";
             $keys[] = $parameter;

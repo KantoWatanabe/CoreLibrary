@@ -25,7 +25,7 @@ abstract class Controller
      *
      * @var array<string>
      */
-    protected $args = [];
+    protected $args = array();
 
     /**
      * Action
@@ -240,7 +240,7 @@ abstract class Controller
      * @param int $responseCode http status code, the default is 200
      * @return void
      */
-    protected function respondView($path, $data=[], $responseCode = 200)
+    protected function respondView($path, $data=array(), $responseCode = 200)
     {
         http_response_code($responseCode);
         require(VIEWS_DIR.'/'.$path.'.php');
@@ -253,7 +253,7 @@ abstract class Controller
      * @param array<mixed> $data response data
      * @return string|false view
      */
-    protected function extractView($path, $data=[])
+    protected function extractView($path, $data=array())
     {
         ob_start();
         $this->respondView($path, $data);
@@ -269,7 +269,7 @@ abstract class Controller
      * @param int $responseCode http status code, the default is 200
      * @return void
      */
-    protected function respondJson($data=[], $responseCode = 200)
+    protected function respondJson($data=array(), $responseCode = 200)
     {
         $json = json_encode($data);
         http_response_code($responseCode);
