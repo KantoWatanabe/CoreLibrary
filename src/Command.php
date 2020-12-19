@@ -117,9 +117,9 @@ abstract class Command
      * Get the the command arguments
      *
      * If no key is specified, all command arguments are returned.
-     * @param string $key command arguments key
+     * @param string|null $key command arguments key
      * @param mixed $default default value if there is no value specified in the key
-     * @return string|array<string> command arguments
+     * @return string|array<string>|null command arguments
      */
     protected function getArg($key = null, $default = null)
     {
@@ -136,9 +136,9 @@ abstract class Command
      * Get the the command options
      *
      * If no key is specified, all command options are returned.
-     * @param string $key command options key
+     * @param string|null $key command options key
      * @param mixed $default default value if there is no value specified in the key
-     * @return string|array<string> command options
+     * @return string|array<string>|null command options
      */
     protected function getOpt($key = null, $default = null)
     {

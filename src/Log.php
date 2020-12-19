@@ -127,10 +127,7 @@ class Log
     {
         $msg .= PHP_EOL;
         if ($obj !== null) {
-            ob_start();
-            var_dump($obj);
-            $msg .= ob_get_contents();
-            ob_end_clean();
+            $msg .= var_export($obj, true).PHP_EOL;
         }
         $trace = debug_backtrace(DEBUG_BACKTRACE_IGNORE_ARGS, 4);
         $caller = isset($trace[3]['class']) ? sprintf('%s%s%s', $trace[3]['class'], $trace[3]['type'], $trace[3]['function']) : '';
