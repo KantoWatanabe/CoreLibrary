@@ -137,9 +137,9 @@ abstract class Controller
      * Get the query parameters
      *
      * If no key is specified, all query parameters are returned.
-     * @param string $key query parameters key
+     * @param string|null $key query parameters key
      * @param mixed $default default value if there is no value specified in the key
-     * @return string|array<string> query parameters
+     * @return string|array<string>|null query parameters
      */
     protected function getQuery($key = null, $default = null)
     {
@@ -156,9 +156,9 @@ abstract class Controller
      * Get the post parameters
      *
      * If no key is specified, all post parameters are returned.
-     * @param string $key post parameters key
+     * @param string|null $key post parameters key
      * @param mixed $default default value if there is no value specified in the key
-     * @return string|array<string> post parameters
+     * @return string|array<string>|null post parameters
      */
     protected function getPost($key = null, $default = null)
     {
@@ -198,9 +198,9 @@ abstract class Controller
      * Get the cookie parameters
      *
      * If no key is specified, all cookie parameters are returned.
-     * @param string $key cookie parameters key
+     * @param string|null $key cookie parameters key
      * @param mixed $default default value if there is no value specified in the key
-     * @return string|array<string> cookie parameters
+     * @return string|array<string>|null cookie parameters
      */
     protected function getCookie($key = null, $default = null)
     {
@@ -217,9 +217,9 @@ abstract class Controller
      * Get the path arguments
      *
      * If no key is specified, all path arguments are returned.
-     * @param string $key path arguments key
+     * @param string|null $key path arguments key
      * @param mixed $default default value if there is no value specified in the key
-     * @return string|array<string> path arguments
+     * @return string|array<string>|null path arguments
      */
     protected function getArg($key = null, $default = null)
     {

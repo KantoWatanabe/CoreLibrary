@@ -115,7 +115,8 @@ class HttpClient
             curl_setopt($curl, CURLOPT_URL, $url . (strpos($url, '?') === false ? '?' : '&') . http_build_query($params));
         } elseif ($method === 'POST' || $method === 'PUT' || $method === 'PATCH' || $method === 'DELETE') {
             curl_setopt($curl, CURLOPT_URL, $url);
-            if (count(preg_grep("/^Content-Type: application\/json/i", $headers)) > 0) {
+            $json_headers = preg_grep("/^Content-Type: application\/json/i", $headers);
+            if ($json_headers !== false && count($json_headers) > 0) {
                 $data = json_encode($params);
             } else {
                 $data = http_build_query($params);
@@ -137,13 +138,11 @@ class HttpClient
         curl_close($curl);
 
         Log::debug(sprintf('[%s][%s][%ssec]', $url, $http_code, $total_time));
-        if (!$response) {
-            Log::info('Acquisition failed');
+        if ($response === false || !is_string($response)) {
+            Log::error("Acquisition failed[$http_code]", $response);
             return false;
         }
-        /** @phpstan-ignore-next-line */
         $header = substr($response, 0, $header_size);
-        /** @phpstan-ignore-next-line */
         $body = substr($response, $header_size);
         return new HttpResponse($http_code, $header, $body);
     }
