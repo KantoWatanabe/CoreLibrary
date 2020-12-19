@@ -139,7 +139,7 @@ class HttpClient
 
         Log::debug(sprintf('[%s][%s][%ssec]', $url, $http_code, $total_time));
         if ($response === false || !is_string($response)) {
-            Log::info('Acquisition failed');
+            Log::error("Acquisition failed[$http_code]", $response);
             return false;
         }
         $header = substr($response, 0, $header_size);
