@@ -98,6 +98,13 @@ class HttpClientTest extends TestCase
         $this->assertSame('DELETE', $body['METHOD']);
     }
 
+    public function testAcquisitionFailed()
+    {
+        $client = new HttpClient;
+        $res = $client->get(null);
+        $this->assertSame(false, $res);
+    }
+
     /**
      * @dataProvider provider
      */

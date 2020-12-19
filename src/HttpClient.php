@@ -138,13 +138,11 @@ class HttpClient
         curl_close($curl);
 
         Log::debug(sprintf('[%s][%s][%ssec]', $url, $http_code, $total_time));
-        if (!$response) {
-            Log::info('Acquisition failed');
+        if ($response === false || !is_string($response)) {
+            Log::error("Acquisition failed[$http_code]", $response);
             return false;
         }
-        /** @phpstan-ignore-next-line */
         $header = substr($response, 0, $header_size);
-        /** @phpstan-ignore-next-line */
         $body = substr($response, $header_size);
         return new HttpResponse($http_code, $header, $body);
     }

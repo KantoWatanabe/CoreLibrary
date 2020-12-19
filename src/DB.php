@@ -268,7 +268,7 @@ class DB
      *
      * @param string $query SQL query
      * @param array<mixed> $params SQL query parameters
-     * @return \PDOStatement<mixed> \PDOStatement object
+     * @return \PDOStatement \PDOStatement object
      */
     private function execute($query, $params)
     {

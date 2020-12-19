@@ -10,8 +10,6 @@
             "homepage": "https://github.com/KantoWatanabe"
         }
     ],
-    "require": {
-    },
     "autoload": {
         "psr-4": {
             "Kore\\": "src/"
@@ -29,12 +27,14 @@
         "phpstan/phpstan": "^0.12.19",
         "php-coveralls/php-coveralls": "^2.2",
         "donatj/mock-webserver": "^2.1",
-        "friendsofphp/php-cs-fixer": "^2.16"
+        "friendsofphp/php-cs-fixer": "^2.16",
+        "vimeo/psalm": "^4.3"
     },
     "scripts": {
         "check" : [
             "vendor/bin/php-cs-fixer fix",
             "vendor/bin/phpstan analyse",
+            "vendor/bin/psalm",
             "vendor/bin/phpunit"
         ]
     }
