@@ -131,8 +131,12 @@ class Log
         }
         $trace = debug_backtrace(DEBUG_BACKTRACE_IGNORE_ARGS, 4);
         $caller = isset($trace[3]['class']) ? sprintf('%s%s%s', $trace[3]['class'], $trace[3]['type'], $trace[3]['function']) : '';
-        $log = sprintf('[%s.%s][%s][%s][%s]%s', date('Y-m-d H:i:s'), explode('.', (string)microtime(true))[1], getmypid(), $level, $caller, $msg);
-        //$log = sprintf('[%s.%s][%s][%s]%s', date('Y-m-d H:i:s', $tarray[0]), $tarray[1], getmypid(), $level, $msg);
+        $microtime = explode('.', (string)microtime(true));
+        $time = date('Y-m-d H:i:s', (int)$microtime[0]);
+        if (isset($microtime[1])) {
+            $time .= '.'.$microtime[1];
+        }
+        $log = sprintf('[%s][%s][%s][%s]%s', $time, getmypid(), $level, $caller, $msg);
         return $log;
     }
 }
