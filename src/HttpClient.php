@@ -15,6 +15,47 @@ use Kore\Log;
 class HttpClient
 {
     /**
+     * connect timeout
+     *
+     * Used as the value of CURLOPT_CONNECTTIMEOUT.
+     * If unspecified, the default is 300.
+     * For unlimited, specify 0.
+     * @var int
+     */
+    protected $connectTimeout = 300;
+    /**
+     * timeout
+     *
+     * Used as the value of CURLOPT_TIMEOUT.
+     * If unspecified, the default is 300.
+     * For unlimited, specify 0.
+     * @var int
+     */
+    protected $timeout = 300;
+
+    /**
+     * Set connect timeout
+     *
+     * @param int $connectTimeout connect timeout
+     * @return void
+     */
+    public function setConnectTimeout($connectTimeout)
+    {
+        $this->connectTimeout = $connectTimeout;
+    }
+
+    /**
+     * Set timeout
+     *
+     * @param int $timeout timeout
+     * @return void
+     */
+    public function setTimeout($timeout)
+    {
+        $this->timeout = $timeout;
+    }
+    
+    /**
      * GET Communication
      *
      * @param string $url request url
@@ -111,6 +152,8 @@ class HttpClient
         curl_setopt($curl, CURLOPT_HEADER, true);
         curl_setopt($curl, CURLOPT_SSL_VERIFYPEER, false);
         curl_setopt($curl, CURLOPT_SSL_VERIFYHOST, false);
+        curl_setopt($curl, CURLOPT_CONNECTTIMEOUT, $this->connectTimeout);
+        curl_setopt($curl, CURLOPT_TIMEOUT, $this->timeout);
         if ($method === 'GET') {
             curl_setopt($curl, CURLOPT_URL, $url . (strpos($url, '?') === false ? '?' : '&') . http_build_query($params));
         } elseif ($method === 'POST' || $method === 'PUT' || $method === 'PATCH' || $method === 'DELETE') {
