@@ -28,6 +28,8 @@ class HttpClientTest extends TestCase
         $headers = ['X-Test-Header: fuga'];
 
         $client = new HttpClient;
+        $client->setConnectTimeout(10);
+        $client->setTimeout(10);
         $res = $client->get($url, $params, $headers);
         $body = $res->getJsonBody();
 
