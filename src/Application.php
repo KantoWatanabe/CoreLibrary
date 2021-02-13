@@ -125,7 +125,7 @@ class Application
     
         $class = null;
         $controller = $this->defaultController;
-        $args = [];
+        $args = array();
         foreach ($parray as $i => $p) {
             $tmpController = implode('\\', array_slice($parray, 0, $i+1));
             if ($tmpController !== '') {
@@ -138,7 +138,7 @@ class Application
                 break;
             }
         }
-        return [$class, $controller, $args];
+        return array($class, $controller, $args);
     }
 
     /**
@@ -179,11 +179,11 @@ class Application
     {
         $class = null;
         $command = COMMANDS_NS.'\\'.str_replace('/', '\\', $argv[1]);
-        $args = [];
-        $opts = [];
+        $args = array();
+        $opts = array();
 
         if (!class_exists($command)) {
-            return [$class, $command, $args, $opts];
+            return array($class, $command, $args, $opts);
         }
 
         $class = new $command();
@@ -198,6 +198,6 @@ class Application
                 }
             }
         }
-        return [$class, $command, $args, $opts];
+        return array($class, $command, $args, $opts);
     }
 }

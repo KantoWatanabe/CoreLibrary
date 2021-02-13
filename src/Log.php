@@ -129,7 +129,9 @@ class Log
         if ($obj !== null) {
             $msg .= var_export($obj, true).PHP_EOL;
         }
-        $trace = debug_backtrace(DEBUG_BACKTRACE_IGNORE_ARGS, 4);
+        // php5.4 or later
+        //$trace = debug_backtrace(DEBUG_BACKTRACE_IGNORE_ARGS, 4);
+        $trace = debug_backtrace(false);
         $caller = isset($trace[3]['class']) ? sprintf('%s%s%s', $trace[3]['class'], $trace[3]['type'], $trace[3]['function']) : '';
         $microtime = explode('.', (string)microtime(true));
         $time = date('Y-m-d H:i:s', (int)$microtime[0]);

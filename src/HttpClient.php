@@ -65,7 +65,7 @@ class HttpClient
      * @return HttpResponse|false \Kore\HttpResponse
      * @see \Kore\HttpResponse
      */
-    public function get($url, $params = [], $headers = [], $userpwd = null)
+    public function get($url, $params = array(), $headers = array(), $userpwd = null)
     {
         return $this->communicate('GET', $url, $params, $headers, $userpwd);
     }
@@ -80,7 +80,7 @@ class HttpClient
      * @return HttpResponse|false \Kore\HttpResponse
      * @see \Kore\HttpResponse
      */
-    public function post($url, $params = [], $headers = [], $userpwd = null)
+    public function post($url, $params = array(), $headers = array(), $userpwd = null)
     {
         return $this->communicate('POST', $url, $params, $headers, $userpwd);
     }
@@ -95,7 +95,7 @@ class HttpClient
      * @return HttpResponse|false
      * @see \Kore\HttpResponse
      */
-    public function put($url, $params = [], $headers = [], $userpwd = null)
+    public function put($url, $params = array(), $headers = array(), $userpwd = null)
     {
         return $this->communicate('PUT', $url, $params, $headers, $userpwd);
     }
@@ -110,7 +110,7 @@ class HttpClient
      * @return HttpResponse|false \Kore\HttpResponse
      * @see \Kore\HttpResponse
      */
-    public function patch($url, $params = [], $headers = [], $userpwd = null)
+    public function patch($url, $params = array(), $headers = array(), $userpwd = null)
     {
         return $this->communicate('PATCH', $url, $params, $headers, $userpwd);
     }
@@ -125,7 +125,7 @@ class HttpClient
      * @return HttpResponse|false \Kore\HttpResponse
      * @see \Kore\HttpResponse
      */
-    public function delete($url, $params = [], $headers = [], $userpwd = null)
+    public function delete($url, $params = array(), $headers = array(), $userpwd = null)
     {
         return $this->communicate('DELETE', $url, $params, $headers, $userpwd);
     }
@@ -141,7 +141,7 @@ class HttpClient
      * @return HttpResponse|false \Kore\HttpResponse
      * @see \Kore\HttpResponse
      */
-    protected function communicate($method, $url, $params = [], $headers = [], $userpwd = null)
+    protected function communicate($method, $url, $params = array(), $headers = array(), $userpwd = null)
     {
         $headers = $this->buildHeader($headers);
         
