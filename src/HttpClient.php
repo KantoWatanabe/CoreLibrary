@@ -155,7 +155,7 @@ class HttpClient
         curl_setopt($curl, CURLOPT_CONNECTTIMEOUT, $this->connectTimeout);
         curl_setopt($curl, CURLOPT_TIMEOUT, $this->timeout);
         if ($method === 'GET') {
-            curl_setopt($curl, CURLOPT_URL, $url . (strpos($url, '?') === false ? '?' : '&') . http_build_query($params));
+            curl_setopt($curl, CURLOPT_URL, url_add_query($url, $params));
         } elseif ($method === 'POST' || $method === 'PUT' || $method === 'PATCH' || $method === 'DELETE') {
             curl_setopt($curl, CURLOPT_URL, $url);
             $json_headers = preg_grep("/^Content-Type: application\/json/i", $headers);

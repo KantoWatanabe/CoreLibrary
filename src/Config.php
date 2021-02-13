@@ -59,15 +59,6 @@ class Config
         if ($key === null) {
             return self::$config;
         }
-        $data = self::$config;
-        $keys = explode('.', $key);
-        foreach ($keys as $k) {
-            if (isset($data[$k])) {
-                $data = $data[$k];
-            } else {
-                return $default;
-            }
-        }
-        return $data;
+        return array_get_recursive(self::$config, $key, $default);
     }
 }

@@ -30,4 +30,7 @@ function bootstrap($app_dir, $app_ns)
     // define namespace
     define('CONTROLLERS_NS', APP_NS.'\\controllers');
     define('COMMANDS_NS', APP_NS.'\\commands');
+
+    // include helper
+    require_once(__DIR__.'/helpers.php');
 }
