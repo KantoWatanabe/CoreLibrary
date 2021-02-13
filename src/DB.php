@@ -270,7 +270,7 @@ class DB
      * @param array<mixed> $params SQL query parameters
      * @return \PDOStatement \PDOStatement object
      */
-    private function execute($query, $params)
+    public function execute($query, $params = array())
     {
         $stm = $this->pdo->prepare($query);
 
