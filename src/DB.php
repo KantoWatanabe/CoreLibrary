@@ -272,7 +272,6 @@ class DB
      */
     private function execute($query, $params)
     {
-        $stm = $this->pdo->query('SET NAMES utf8');
         $stm = $this->pdo->prepare($query);
 
         $keys = array();
