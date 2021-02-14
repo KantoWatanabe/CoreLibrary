@@ -189,7 +189,7 @@ class DB
      * Rollback if an exception is raised in the callback.
      * @param callable $callback callback processing
      * @return void
-     * @throws \Exception $e
+     * @throws \Exception
      */
     public function transaction($callback)
     {

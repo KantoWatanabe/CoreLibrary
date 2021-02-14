@@ -20,6 +20,8 @@ if (!function_exists('url_add_query')) {
 if (!function_exists('array_get_recursive')) {
     /**
      * Get array values recursively
+     * 
+     * If the key is passed dot-delimited, it is interpreted as an array path.
      * @param array<mixed> $array array
      * @param string $key key
      * @param mixed $default default value
