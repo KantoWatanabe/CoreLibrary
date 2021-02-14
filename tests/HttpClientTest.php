@@ -102,9 +102,9 @@ class HttpClientTest extends TestCase
 
     public function testAcquisitionFailed()
     {
+        $this->expectExceptionMessage('Communication Error');
         $client = new HttpClient;
         $res = $client->get(null);
-        $this->assertSame(false, $res);
     }
 
     /**
