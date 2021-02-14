@@ -189,6 +189,7 @@ class DB
      * Rollback if an exception is raised in the callback.
      * @param callable $callback callback processing
      * @return void
+     * @throws \Exception $e
      */
     public function transaction($callback)
     {
@@ -197,8 +198,8 @@ class DB
             $callback();
             $this->commit();
         } catch (\Exception $e) {
-            Log::error($e->getMessage());
             $this->rollback();
+            throw $e;
         }
     }
 
