@@ -62,7 +62,8 @@ class HttpClient
      * @param array<mixed> $params request parameters
      * @param array<mixed> $headers request headers
      * @param string|null $userpwd user name and password
-     * @return HttpResponse|false \Kore\HttpResponse
+     * @return HttpResponse \Kore\HttpResponse
+     * @throws \Exception
      * @see \Kore\HttpResponse
      */
     public function get($url, $params = array(), $headers = array(), $userpwd = null)
@@ -77,7 +78,8 @@ class HttpClient
      * @param array<mixed> $params request parameters
      * @param array<mixed> $headers request headers
      * @param string|null $userpwd user name and password
-     * @return HttpResponse|false \Kore\HttpResponse
+     * @return HttpResponse \Kore\HttpResponse
+     * @throws \Exception
      * @see \Kore\HttpResponse
      */
     public function post($url, $params = array(), $headers = array(), $userpwd = null)
@@ -92,7 +94,8 @@ class HttpClient
      * @param array<mixed> $params request parameters
      * @param array<mixed> $headers request headers
      * @param string|null $userpwd user name and password
-     * @return HttpResponse|false
+     * @return HttpResponse \Kore\HttpResponse
+     * @throws \Exception
      * @see \Kore\HttpResponse
      */
     public function put($url, $params = array(), $headers = array(), $userpwd = null)
@@ -107,7 +110,8 @@ class HttpClient
      * @param array<mixed> $params request parameters
      * @param array<mixed> $headers request headers
      * @param string|null $userpwd user name and password
-     * @return HttpResponse|false \Kore\HttpResponse
+     * @return HttpResponse \Kore\HttpResponse
+     * @throws \Exception
      * @see \Kore\HttpResponse
      */
     public function patch($url, $params = array(), $headers = array(), $userpwd = null)
@@ -122,7 +126,8 @@ class HttpClient
      * @param array<mixed> $params request parameters
      * @param array<mixed> $headers request headers
      * @param string|null $userpwd user name and password
-     * @return HttpResponse|false \Kore\HttpResponse
+     * @return HttpResponse \Kore\HttpResponse
+     * @throws \Exception
      * @see \Kore\HttpResponse
      */
     public function delete($url, $params = array(), $headers = array(), $userpwd = null)
@@ -138,7 +143,8 @@ class HttpClient
      * @param array<mixed> $params request parameters
      * @param array<mixed> $headers request headers
      * @param string|null $userpwd user name and password
-     * @return HttpResponse|false \Kore\HttpResponse
+     * @return HttpResponse \Kore\HttpResponse
+     * @throws \Exception
      * @see \Kore\HttpResponse
      */
     protected function communicate($method, $url, $params = array(), $headers = array(), $userpwd = null)
@@ -155,7 +161,8 @@ class HttpClient
         curl_setopt($curl, CURLOPT_CONNECTTIMEOUT, $this->connectTimeout);
         curl_setopt($curl, CURLOPT_TIMEOUT, $this->timeout);
         if ($method === 'GET') {
-            curl_setopt($curl, CURLOPT_URL, url_add_query($url, $params));
+            $url = url_add_query($url, $params);
+            curl_setopt($curl, CURLOPT_URL, $url);
         } elseif ($method === 'POST' || $method === 'PUT' || $method === 'PATCH' || $method === 'DELETE') {
             curl_setopt($curl, CURLOPT_URL, $url);
             $json_headers = preg_grep("/^Content-Type: application\/json/i", $headers);
@@ -182,8 +189,7 @@ class HttpClient
 
         Log::debug(sprintf('[%s][%s][%ssec]', $url, $http_code, $total_time));
         if ($response === false || !is_string($response)) {
-            Log::error("Acquisition failed[$http_code]", $response);
-            return false;
+            throw new \Exception("Communication Error[$url($http_code)]");
         }
         $header = substr($response, 0, $header_size);
         $body = substr($response, $header_size);
