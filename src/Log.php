@@ -54,7 +54,7 @@ class Log
     public static function debug($msg, $obj = null)
     {
         if (self::$logLevel <= self::LEVEL_DEBUG) {
-            self::write('DEBUG', $msg, $obj);
+            static::write('DEBUG', $msg, $obj);
         }
     }
 
@@ -68,7 +68,7 @@ class Log
     public static function info($msg, $obj = null)
     {
         if (self::$logLevel <= self::LEVEL_INFO) {
-            self::write('INFO', $msg, $obj);
+            static::write('INFO', $msg, $obj);
         }
     }
 
@@ -82,7 +82,7 @@ class Log
     public static function warn($msg, $obj = null)
     {
         if (self::$logLevel <= self::LEVEL_WARN) {
-            self::write('WARN', $msg, $obj);
+            static::write('WARN', $msg, $obj);
         }
     }
 
@@ -96,7 +96,7 @@ class Log
     public static function error($msg, $obj = null)
     {
         if (self::$logLevel <= self::LEVEL_ERROR) {
-            self::write('ERROR', $msg, $obj);
+            static::write('ERROR', $msg, $obj);
         }
     }
 
@@ -111,7 +111,7 @@ class Log
     protected static function write($level, $msg, $obj)
     {
         $logfile = LOGS_DIR.'/'.self::$logName.'-'.date("Y-m-d").'.log';
-        $log = self::buildLog($level, $msg, $obj);
+        $log = static::buildLog($level, $msg, $obj);
         file_put_contents($logfile, $log, FILE_APPEND);
     }
 
