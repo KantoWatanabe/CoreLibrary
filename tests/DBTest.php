@@ -153,8 +153,9 @@ SQL;
         // ロールバックされるか
         //
 
-        DB::connection()->transaction(function () {
-            $query =<<<SQL
+        try {
+            DB::connection()->transaction(function () {
+                $query =<<<SQL
 INSERT INTO test
     SET
         col1 = :col1,
@@ -162,13 +163,16 @@ INSERT INTO test
         col3 = :col3,
         col4 = :col4
 SQL;
-            DB::connection()->insert($query, [
-                'col1' => 3,
-                'col2' => 'hoge',
-                'col3' => null,
-                'col4' => false]);
-            throw new \Exception('test error!');
-        });
+                DB::connection()->insert($query, [
+                    'col1' => 3,
+                    'col2' => 'hoge',
+                    'col3' => null,
+                    'col4' => false]);
+                throw new \Exception('test error!');
+            });
+        } catch (\Exception $e) {
+            // NOP
+        }
 
         $query =<<<SQL
 SELECT COUNT(id) FROM test
