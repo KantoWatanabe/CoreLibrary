@@ -63,14 +63,13 @@ abstract class Command
         }
         touch($lockfile);
 
-        Log::info(sprintf('[START]%s', $this->command));
+        Log::debug(sprintf('[START]%s', $this->command));
         try {
             $this->exec();
         } catch (\Exception $e) {
-            Log::error($e->getMessage());
             $this->handleError($e);
         }
-        Log::info(sprintf('[END]%s', $this->command));
+        Log::debug(sprintf('[END]%s', $this->command));
 
         unlink($lockfile);
     }
@@ -110,7 +109,7 @@ abstract class Command
      */
     protected function handleError($e)
     {
-        // Override if necessary
+        Log::error($e->getMessage());
     }
 
     /**

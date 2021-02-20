@@ -48,15 +48,14 @@ abstract class Controller
         $this->args = $args;
         Log::init($this->moduleName(), $this->logLevel());
 
-        Log::info(sprintf('[START][%s]%s', $this->getMethod(), $this->controller));
+        Log::debug(sprintf('[START][%s]%s', $this->getMethod(), $this->controller));
         try {
             $this->preaction();
             $this->action();
         } catch (\Exception $e) {
-            Log::error($e->getMessage());
             $this->handleError($e);
         }
-        Log::info(sprintf('[END][%s]%s', $this->getMethod(), $this->controller));
+        Log::debug(sprintf('[END][%s]%s', $this->getMethod(), $this->controller));
     }
 
     /**
@@ -104,7 +103,7 @@ abstract class Controller
      */
     protected function handleError($e)
     {
-        // Override if necessary
+        Log::error($e->getMessage());
     }
 
     /**
