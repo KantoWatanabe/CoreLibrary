@@ -75,7 +75,7 @@ abstract class Command
     }
 
     /**
-     * Get the the command name
+     * Get the command name
      *
      * The default is the end of the command namespace.
      * If you need to customize, please override it with subclasses.
@@ -88,7 +88,7 @@ abstract class Command
     }
 
     /**
-     * Get the the log level
+     * Get the log level
      *
      * The default is Log::LEVEL_DEBUG.
      * If you need to customize, please override it with subclasses.
@@ -125,7 +125,7 @@ abstract class Command
     }
 
     /**
-     * Get the the command arguments
+     * Get the command arguments
      *
      * If no key is specified, all command arguments are returned.
      * @param string|null $key command arguments key
@@ -144,7 +144,7 @@ abstract class Command
     }
 
     /**
-     * Get the the command options
+     * Get the command options
      *
      * If no key is specified, all command options are returned.
      * @param string|null $key command options key

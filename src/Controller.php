@@ -59,7 +59,7 @@ abstract class Controller
     }
 
     /**
-     * Get the the module name
+     * Get the module name
      *
      * The default is 'app'.
      * If you need to customize, please override it with subclasses.
@@ -71,7 +71,7 @@ abstract class Controller
     }
 
     /**
-     * Get the the log level
+     * Get the log level
      *
      * The default is Log::LEVEL_DEBUG.
      * If you need to customize, please override it with subclasses.
