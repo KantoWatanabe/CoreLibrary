@@ -57,7 +57,7 @@ abstract class Command
         Log::init($this->commandName(), $this->logLevel());
 
         $lockfile = TMP_DIR.'/'.$this->commandName().'.lock';
-        if (file_exists($lockfile)) {
+        if (file_exists($lockfile) && filemtime($lockfile) + $this->lockTime() >= time()) {
             Log::warn('Process is running!');
             return;
         }
@@ -98,6 +98,18 @@ abstract class Command
     protected function logLevel()
     {
         return Log::LEVEL_DEBUG;
+    }
+
+    /**
+     * Get the lock time
+     *
+     * The default is 24 hours.
+     * If you need to customize, please override it with subclasses.
+     * @return int lock time
+     */
+    protected function lockTime()
+    {
+        return 60 * 60 * 24;
     }
 
     /**
