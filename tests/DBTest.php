@@ -21,7 +21,7 @@ class DBTest extends TestCase
     
     public function testConnectionNoConfig()
     {
-        $this->expectExceptionMessage('Databse config noconfig is not found!');
+        $this->expectExceptionMessage('Database config noconfig is not found!');
         DB::connection("noconfig");
     }
 
