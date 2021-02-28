@@ -72,7 +72,7 @@ class DB
     {
         $config = Config::get($dbconfig);
         if ($config === null) {
-            throw new \Exception("Databse config $dbconfig is not found!");
+            throw new \Exception("Database config $dbconfig is not found!");
         }
         $host = $config['host'];
         $db = $config['db'];
