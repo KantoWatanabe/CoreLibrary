@@ -25,7 +25,7 @@
     "require-dev": {
         "phpunit/phpunit": "^9",
         "phpstan/phpstan": "^0.12.19",
-        "php-coveralls/php-coveralls": "^2.2",
+        "php-coveralls/php-coveralls": "^2.3",
         "donatj/mock-webserver": "^2.1",
         "friendsofphp/php-cs-fixer": "^2.16",
         "vimeo/psalm": "^4.3"
