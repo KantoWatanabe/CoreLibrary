@@ -201,11 +201,12 @@ abstract class Controller
     }
 
     /**
-     * Get the cookie parameter
+     * Get the cookie parameters
      *
-     * @param string|null $key cookie parameter key
+     * If no key is specified, all cookie parameters are returned.
+     * @param string|null $key cookie parameters key
      * @param mixed $default default value if there is no value specified in the key
-     * @return string|array<string>|null cookie parameter
+     * @return string|array<string>|null cookie parameters
      */
     protected function getCookie($key = null, $default = null)
     {
