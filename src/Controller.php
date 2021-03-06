@@ -226,7 +226,7 @@ abstract class Controller
      * @param mixed $default default value if there is no value specified in the key
      * @return string|null server parameter
      */
-    protected function getServer($key = null, $default = null)
+    protected function getServer($key, $default = null)
     {
         if (!isset($_SERVER[$key])) {
             return $default;
