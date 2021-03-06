@@ -35,7 +35,7 @@
             "vendor/bin/php-cs-fixer fix",
             "vendor/bin/phpstan analyse",
             "vendor/bin/psalm",
-            "vendor/bin/phpunit"
+            "vendor/bin/phpunit --coverage-clover build/logs/clover.xml"
         ]
     }
 }
