@@ -48,14 +48,14 @@ abstract class Controller
         $this->args = $args;
         Log::init($this->moduleName(), $this->logLevel());
 
-        Log::debug(sprintf('[START][%s]%s', $this->getMethod(), $this->controller));
+        Log::debug(sprintf('[START]%s', $this->controller));
         try {
             $this->preaction();
             $this->action();
         } catch (\Exception $e) {
             $this->handleError($e);
         }
-        Log::debug(sprintf('[END][%s]%s', $this->getMethod(), $this->controller));
+        Log::debug(sprintf('[END]%s', $this->controller));
     }
 
     /**
@@ -109,11 +109,21 @@ abstract class Controller
     /**
      * Get the http method
      *
-     * @return string http method
+     * @return string|null http method
      */
     protected function getMethod()
     {
-        return $_SERVER['REQUEST_METHOD'];
+        return $this->getServer('REQUEST_METHOD');
+    }
+
+    /**
+     * Get the User Agent
+     *
+     * @return string|null User Agent
+     */
+    protected function getUserAgent()
+    {
+        return $this->getServer('HTTP_USER_AGENT');
     }
 
     /**
@@ -126,10 +136,7 @@ abstract class Controller
     protected function getHeader($key, $default = null)
     {
         $headerName = 'HTTP_' . str_replace('-', '_', strtoupper($key));
-        if (!isset($_SERVER[$headerName])) {
-            return $default;
-        }
-        return $_SERVER[$headerName];
+        return $this->getServer($headerName, $default);
     }
 
     /**
@@ -210,6 +217,21 @@ abstract class Controller
             return $default;
         }
         return $_COOKIE[$key];
+    }
+
+    /**
+     * Get the server parameter
+     *
+     * @param string|null $key server parameter key
+     * @param mixed $default default value if there is no value specified in the key
+     * @return string|null server parameter
+     */
+    protected function getServer($key = null, $default = null)
+    {
+        if (!isset($_SERVER[$key])) {
+            return $default;
+        }
+        return $_SERVER[$key];
     }
  
     /**

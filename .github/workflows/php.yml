@@ -18,10 +18,11 @@ jobs:
     steps:
     - uses: actions/checkout@v2
       
-    - name: Setup PHP ${{ matrix.php-versions }}
+    - name: Setup PHP ${{ matrix.php-versions }} with Xdebug
       uses: shivammathur/setup-php@v2
       with:
         php-version: ${{ matrix.php-versions }}
+        coverage: xdebug
 
     - name: Validate composer.json and composer.lock
       run: composer validate

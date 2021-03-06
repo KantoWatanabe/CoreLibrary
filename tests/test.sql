@@ -1,7 +1,7 @@
 CREATE DATABASE test;
 USE test;
 
-CREATE USER test@localhost IDENTIFIED BY 'test';
+CREATE USER test@localhost IDENTIFIED WITH mysql_native_password BY 'test';
 GRANT ALL PRIVILEGES ON test.* to test@localhost;
 
 CREATE TABLE IF NOT EXISTS `test` (
