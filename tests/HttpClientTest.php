@@ -26,15 +26,17 @@ class HttpClientTest extends TestCase
         $url = self::$server->getServerRoot() . '/get';
         $params = ['param' => 'hoge'];
         $headers = ['X-Test-Header: fuga'];
+        $userpwd = 'user:pass';
 
         $client = new HttpClient;
         $client->setConnectTimeout(10);
         $client->setTimeout(10);
-        $res = $client->get($url, $params, $headers);
+        $res = $client->get($url, $params, $headers, $userpwd);
         $body = $res->getJsonBody();
 
         $this->assertSame('hoge', $body['_GET']['param']);
         $this->assertSame('fuga', $body['HEADERS']['X-Test-Header']);
+        $this->assertSame('Basic '.base64_encode($userpwd), $body['HEADERS']['Authorization']);
     }
 
     public function testPost()

@@ -45,13 +45,15 @@ INSERT INTO test
         col1 = :col1,
         col2 = :col2,
         col3 = :col3,
-        col4 = :col4
+        col4 = :col4,
+        col5 = :col5
 SQL;
         DB::connection()->insert($query, [
             'col1' => 1,
             'col2' => 'hoge',
             'col3' => null,
-            'col4' => false]);
+            'col4' => false,
+            'col5' => 1.1]);
 
         $this->assertSame(true, true);
 
@@ -124,13 +126,15 @@ INSERT INTO test
         col1 = :col1,
         col2 = :col2,
         col3 = :col3,
-        col4 = :col4
+        col4 = :col4,
+        col5 = :col5
 SQL;
             DB::connection()->insert($query, [
                 'col1' => 2,
                 'col2' => 'hoge',
                 'col3' => null,
-                'col4' => false]);
+                'col4' => false,
+                'col5' => 1.1]);
         });
 
         $query =<<<SQL
@@ -161,13 +165,15 @@ INSERT INTO test
         col1 = :col1,
         col2 = :col2,
         col3 = :col3,
-        col4 = :col4
+        col4 = :col4,
+        col5 = :col5
 SQL;
                 DB::connection()->insert($query, [
                     'col1' => 3,
                     'col2' => 'hoge',
                     'col3' => null,
-                    'col4' => false]);
+                    'col4' => false,
+                    'col5' => 1.1]);
                 throw new \Exception('test error!');
             });
         } catch (\Exception $e) {
