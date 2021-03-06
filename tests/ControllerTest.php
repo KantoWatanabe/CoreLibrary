@@ -12,6 +12,7 @@ class ControllerTest extends TestCase
         $_POST['post'] = 'fuga';
         $_COOKIE['cookie'] = 'piyo';
         $_SERVER['HTTP_X_TEST_HEADER'] = 'hoge';
+        $_SERVER['HTTP_USER_AGENT'] = 'test user agent';
     }
 
     public function testMain()
@@ -40,6 +41,16 @@ class ControllerTest extends TestCase
         $method = new \ReflectionMethod(get_class($class), 'getMethod');
         $method->setAccessible(true);
         $this->assertSame('GET', $method->invoke($class));
+    }
+
+    /**
+     * @depends testMain
+     */
+    public function testGetUserAgent($class)
+    {
+        $method = new \ReflectionMethod(get_class($class), 'getUserAgent');
+        $method->setAccessible(true);
+        $this->assertSame('test user agent', $method->invoke($class));
     }
 
     /**
