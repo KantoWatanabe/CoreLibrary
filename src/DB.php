@@ -332,10 +332,6 @@ class DB
             case 'integer':
                 $datatype = \PDO::PARAM_INT;
                 break;
-            case 'double':
-                // doubleに対応するdatatypeがないのでSTR
-                $datatype = \PDO::PARAM_STR;
-                break;
             case 'string':
                 $datatype = \PDO::PARAM_STR;
                 break;
