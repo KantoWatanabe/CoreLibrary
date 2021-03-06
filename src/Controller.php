@@ -48,14 +48,14 @@ abstract class Controller
         $this->args = $args;
         Log::init($this->moduleName(), $this->logLevel());
 
-        Log::debug(sprintf('[START][%s]%s', $this->getMethod(), $this->controller));
+        Log::debug(sprintf('[START]%s', $this->controller));
         try {
             $this->preaction();
             $this->action();
         } catch (\Exception $e) {
             $this->handleError($e);
         }
-        Log::debug(sprintf('[END][%s]%s', $this->getMethod(), $this->controller));
+        Log::debug(sprintf('[END]%s', $this->controller));
     }
 
     /**
