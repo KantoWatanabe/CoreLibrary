@@ -25,8 +25,11 @@ class CommandTest extends TestCase
 
         // エラーのハンドリング
         $opts['error'] = '1';
-        $class->main($command, $args, $opts);
-        $this->assertSame(true, true);
+        try {
+            $class->main($command, $args, $opts);
+        } catch (\Exception $e) {
+            $this->assertSame('test error!', $e->getMessage());
+        }
 
         return $class;
     }
