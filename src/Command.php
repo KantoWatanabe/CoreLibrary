@@ -119,6 +119,7 @@ abstract class Command
      * If you need to customize the handling of errors, please override it with subclasses.
      * @param \Exception $e errors
      * @return void
+     * @throws \Exception
      */
     protected function handleError($e)
     {
