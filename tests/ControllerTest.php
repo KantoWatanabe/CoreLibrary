@@ -26,8 +26,11 @@ class ControllerTest extends TestCase
 
         // エラーのハンドリング
         $_GET['error'] = '1';
-        $class->main($controller, $args);
-        $this->assertSame(true, true);
+        try {
+            $class->main($controller, $args);
+        } catch (\Exception $e) {
+            $this->assertSame('test error!', $e->getMessage());
+        }
         unset($_GET['error']);
 
         return $class;

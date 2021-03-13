@@ -104,6 +104,7 @@ abstract class Controller
     protected function handleError($e)
     {
         Log::error($e->getMessage());
+        throw $e;
     }
 
     /**

@@ -56,22 +56,23 @@ abstract class Command
         $this->opts = $opts;
         Log::init($this->commandName(), $this->logLevel());
 
-        $lockfile = TMP_DIR.'/'.$this->commandName().'.lock';
-        if (file_exists($lockfile) && filemtime($lockfile) + $this->lockTime() >= time()) {
+        $lockManager = new LockManager($this->commandName(), $this->lockTime());
+        if ($lockManager->isLock()) {
             Log::warn('Process is running!');
             return;
         }
-        touch($lockfile);
+        $lockManager->lock();
 
         Log::debug(sprintf('[START]%s', $this->command));
         try {
             $this->exec();
         } catch (\Exception $e) {
+            $lockManager->unlock();
             $this->handleError($e);
         }
         Log::debug(sprintf('[END]%s', $this->command));
 
-        unlink($lockfile);
+        $lockManager->unlock();
     }
 
     /**
@@ -122,6 +123,7 @@ abstract class Command
     protected function handleError($e)
     {
         Log::error($e->getMessage());
+        throw $e;
     }
 
     /**
@@ -160,5 +162,58 @@ abstract class Command
             return $default;
         }
         return $this->opts[$key];
+    }
+}
+
+/**
+ * Managing Command Lock
+ *
+ */
+class LockManager
+{
+    /** @var string lock file */
+    private $lockFile;
+    /** @var int lock time */
+    private $lockTime;
+
+    /**
+     * __construct
+     * @param string $lockFileName lock file name
+     * @param int $lockTime lock time
+     * @return void
+     */
+    public function __construct($lockFileName, $lockTime)
+    {
+        $this->lockFile = TMP_DIR.'/'.$lockFileName.'.lock';
+        $this->lockTime = $lockTime;
+    }
+
+    /**
+     * Lock
+     * @return void
+     */
+    public function lock()
+    {
+        touch($this->lockFile);
+    }
+
+    /**
+     * Unlock
+     * @return void
+     */
+    public function unlock()
+    {
+        if (file_exists($this->lockFile)) {
+            unlink($this->lockFile);
+        }
+    }
+
+    /**
+     * Locked or not
+     * @return boolean locked or not
+     */
+    public function isLock()
+    {
+        return file_exists($this->lockFile) && filemtime($this->lockFile) + $this->lockTime >= time();
     }
 }
