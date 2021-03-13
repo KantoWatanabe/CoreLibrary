@@ -34,7 +34,7 @@ class Config
     public static function create($env = null)
     {
         if (empty(self::$config)) {
-            $env = ($env === null) ? '' : '-'.$env;
+            $env = empty($env) ? '' : '-'.$env;
             $configfile = CONFIG_DIR.'/config'.$env.'.php';
             if (!file_exists($configfile)) {
                 throw new \Exception('Unable to find config file -> ' . $configfile);
