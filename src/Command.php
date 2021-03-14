@@ -172,20 +172,22 @@ abstract class Command
  */
 class LockManager
 {
-    /** @var string lock file */
-    private $lockFile;
+    /** @var string process name */
+    protected $pname;
     /** @var int lock time */
-    private $lockTime;
+    protected $lockTime;
+    /** @var string lock file */
+    protected $_lockFile;
 
     /**
      * __construct
-     * @param string $lockFileName lock file name
+     * @param string $pname process name
      * @param int $lockTime lock time
      * @return void
      */
-    public function __construct($lockFileName, $lockTime)
+    public function __construct($pname, $lockTime)
     {
-        $this->lockFile = TMP_DIR.'/'.$lockFileName.'.lock';
+        $this->pname = $pname;
         $this->lockTime = $lockTime;
     }
 
@@ -195,7 +197,7 @@ class LockManager
      */
     public function lock()
     {
-        touch($this->lockFile);
+        touch($this->lockFile());
     }
 
     /**
@@ -204,8 +206,8 @@ class LockManager
      */
     public function unlock()
     {
-        if (file_exists($this->lockFile)) {
-            unlink($this->lockFile);
+        if (file_exists($this->lockFile())) {
+            unlink($this->lockFile());
         }
     }
 
@@ -215,6 +217,18 @@ class LockManager
      */
     public function isLock()
     {
-        return file_exists($this->lockFile) && filemtime($this->lockFile) + $this->lockTime >= time();
+        return file_exists($this->lockFile()) && filemtime($this->lockFile()) + $this->lockTime >= time();
+    }
+
+    /**
+     * Get lock file
+     * @return string lock file
+     */
+    protected function lockFile()
+    {
+        if (!$this->_lockFile) {
+            $this->_lockFile = TMP_DIR.'/'.$this->pname.'.lock';
+        }
+        return $this->_lockFile;
     }
 }
