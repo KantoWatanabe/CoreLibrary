@@ -111,7 +111,7 @@ abstract class Controller
     /**
      * Get the http method
      *
-     * @return string|null http method
+     * @return mixed http method
      */
     protected function getMethod()
     {
@@ -121,7 +121,7 @@ abstract class Controller
     /**
      * Get the User Agent
      *
-     * @return string|null User Agent
+     * @return mixed User Agent
      */
     protected function getUserAgent()
     {
@@ -133,7 +133,7 @@ abstract class Controller
      *
      * @param string $key header key
      * @param mixed $default default value if there is no value specified in the key
-     * @return string|null http header
+     * @return mixed http header
      */
     protected function getHeader($key, $default = null)
     {
@@ -145,38 +145,26 @@ abstract class Controller
      * Get the query parameters
      *
      * If no key is specified, all query parameters are returned.
-     * @param string|null $key query parameters key
+     * @param string|null $key query parameter key
      * @param mixed $default default value if there is no value specified in the key
-     * @return string|array<string>|null query parameters
+     * @return mixed query parameters
      */
     protected function getQuery($key = null, $default = null)
     {
-        if ($key === null) {
-            return $_GET;
-        }
-        if (!isset($_GET[$key])) {
-            return $default;
-        }
-        return $_GET[$key];
+        return $this->getFromArray($_GET, $key, $default);
     }
 
     /**
      * Get the post parameters
      *
      * If no key is specified, all post parameters are returned.
-     * @param string|null $key post parameters key
+     * @param string|null $key post parameter key
      * @param mixed $default default value if there is no value specified in the key
-     * @return string|array<string>|null post parameters
+     * @return mixed post parameters
      */
     protected function getPost($key = null, $default = null)
     {
-        if ($key === null) {
-            return $_POST;
-        }
-        if (!isset($_POST[$key])) {
-            return $default;
-        }
-        return $_POST[$key];
+        return $this->getFromArray($_POST, $key, $default);
     }
 
     /**
@@ -206,53 +194,59 @@ abstract class Controller
      * Get the cookie parameters
      *
      * If no key is specified, all cookie parameters are returned.
-     * @param string|null $key cookie parameters key
+     * @param string|null $key cookie parameter key
      * @param mixed $default default value if there is no value specified in the key
-     * @return string|array<string>|null cookie parameters
+     * @return mixed cookie parameters
      */
     protected function getCookie($key = null, $default = null)
     {
-        if ($key === null) {
-            return $_COOKIE;
-        }
-        if (!isset($_COOKIE[$key])) {
-            return $default;
-        }
-        return $_COOKIE[$key];
+        return $this->getFromArray($_COOKIE, $key, $default);
     }
 
     /**
-     * Get the server parameter
+     * Get the server parameters
      *
+     * If no key is specified, all server parameters are returned.
      * @param string|null $key server parameter key
      * @param mixed $default default value if there is no value specified in the key
-     * @return string|null server parameter
+     * @return mixed server parameters
      */
-    protected function getServer($key, $default = null)
+    protected function getServer($key = null, $default = null)
     {
-        if (!isset($_SERVER[$key])) {
-            return $default;
-        }
-        return $_SERVER[$key];
+        return $this->getFromArray($_SERVER, $key, $default);
     }
  
     /**
      * Get the path arguments
      *
      * If no key is specified, all path arguments are returned.
-     * @param string|null $key path arguments key
+     * @param string|null $key path argument key
      * @param mixed $default default value if there is no value specified in the key
-     * @return string|array<string>|null path arguments
+     * @return mixed path arguments
      */
     protected function getArg($key = null, $default = null)
     {
+        return $this->getFromArray($this->args, $key, $default);
+    }
+
+    /**
+     * Get from array
+     *
+     * If no key is specified, array is returned.
+     * @param array<mixed> $array array
+     * @param string|null $key path key
+     * @param mixed $default default value if there is no value specified in the key
+     * @return mixed value
+     */
+    protected function getFromArray($array, $key, $default)
+    {
         if ($key === null) {
-            return $this->args;
+            return $array;
         }
-        if (!isset($this->args[$key])) {
+        if (!isset($array[$key])) {
             return $default;
         }
-        return $this->args[$key];
+        return $array[$key];
     }
 
     /**

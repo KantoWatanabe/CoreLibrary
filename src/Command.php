@@ -131,38 +131,46 @@ abstract class Command
      * Get the command arguments
      *
      * If no key is specified, all command arguments are returned.
-     * @param string|null $key command arguments key
+     * @param string|null $key command argument key
      * @param mixed $default default value if there is no value specified in the key
-     * @return string|array<string>|null command arguments
+     * @return mixed command arguments
      */
     protected function getArg($key = null, $default = null)
     {
-        if ($key === null) {
-            return $this->args;
-        }
-        if (!isset($this->args[$key])) {
-            return $default;
-        }
-        return $this->args[$key];
+        return $this->getFromArray($this->args, $key, $default);
     }
 
     /**
      * Get the command options
      *
      * If no key is specified, all command options are returned.
-     * @param string|null $key command options key
+     * @param string|null $key command option key
      * @param mixed $default default value if there is no value specified in the key
-     * @return string|array<string>|null command options
+     * @return mixed command options
      */
     protected function getOpt($key = null, $default = null)
     {
+        return $this->getFromArray($this->opts, $key, $default);
+    }
+
+    /**
+     * Get from array
+     *
+     * If no key is specified, array is returned.
+     * @param array<mixed> $array array
+     * @param string|null $key path key
+     * @param mixed $default default value if there is no value specified in the key
+     * @return mixed value
+     */
+    protected function getFromArray($array, $key, $default)
+    {
         if ($key === null) {
-            return $this->opts;
+            return $array;
         }
-        if (!isset($this->opts[$key])) {
+        if (!isset($array[$key])) {
             return $default;
         }
-        return $this->opts[$key];
+        return $array[$key];
     }
 }
 

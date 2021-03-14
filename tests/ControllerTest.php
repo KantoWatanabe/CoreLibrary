@@ -130,6 +130,16 @@ class ControllerTest extends TestCase
     /**
      * @depends testMain
      */
+    public function testGetServer($class)
+    {
+        $method = new \ReflectionMethod(get_class($class), 'getServer');
+        $method->setAccessible(true);
+        $this->assertIsArray($method->invoke($class));
+    }
+
+    /**
+     * @depends testMain
+     */
     public function testGetArg($class)
     {
         $method = new \ReflectionMethod(get_class($class), 'getArg');
