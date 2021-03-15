@@ -185,7 +185,7 @@ class LockManager
     /** @var int lock time */
     protected $lockTime;
     /** @var string lock file */
-    protected $_lockFile;
+    protected $lockFile;
 
     /**
      * __construct
@@ -234,9 +234,9 @@ class LockManager
      */
     protected function lockFile()
     {
-        if (!$this->_lockFile) {
-            $this->_lockFile = TMP_DIR.'/'.$this->pname.'.lock';
+        if (!$this->lockFile) {
+            $this->lockFile = TMP_DIR.'/'.$this->pname.'.lock';
         }
-        return $this->_lockFile;
+        return $this->lockFile;
     }
 }
