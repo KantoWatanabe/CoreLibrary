@@ -162,7 +162,7 @@ abstract class Command
      * @param mixed $default default value if there is no value specified in the key
      * @return mixed value
      */
-    protected function getFromArray($array, $key, $default)
+    protected function getFromArray($array, $key = null, $default = null)
     {
         if ($key === null) {
             return $array;
