@@ -28,7 +28,7 @@
         "php-coveralls/php-coveralls": "^2.4",
         "donatj/mock-webserver": "^2.1",
         "friendsofphp/php-cs-fixer": "^2.16",
-        "vimeo/psalm": "^4.3"
+        "vimeo/psalm": "^4.6"
     },
     "scripts": {
         "check" : [
