@@ -31,7 +31,7 @@ abstract class Controller
      *
      * @var string
      */
-    protected $body = '';
+    protected $body;
 
     /**
      * Action
@@ -180,7 +180,7 @@ abstract class Controller
      */
     protected function getBody()
     {
-        if (!$this->body) {
+        if (!isset($this->body)) {
             $body = file_get_contents('php://input');
             $this->body = $body !== false ? $body : '';
         }
