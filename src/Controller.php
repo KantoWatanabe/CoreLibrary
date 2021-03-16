@@ -26,6 +26,12 @@ abstract class Controller
      * @var array<string>
      */
     protected $args = array();
+    /**
+     * request body
+     *
+     * @var string
+     */
+    protected $body;
 
     /**
      * Action
@@ -174,9 +180,11 @@ abstract class Controller
      */
     protected function getBody()
     {
-        $body = file_get_contents('php://input');
-        $body = $body !== false ? $body : '';
-        return $body;
+        if (!isset($this->body)) {
+            $body = file_get_contents('php://input');
+            $this->body = $body !== false ? $body : '';
+        }
+        return $this->body;
     }
 
     /**
@@ -186,8 +194,7 @@ abstract class Controller
      */
     protected function getJsonBody()
     {
-        $body = json_decode($this->getBody(), true);
-        return $body;
+        return json_decode($this->getBody(), true);
     }
 
     /**
