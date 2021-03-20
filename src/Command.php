@@ -123,7 +123,7 @@ abstract class Command
      */
     protected function handleError($e)
     {
-        Log::error($e->getMessage());
+        Log::error($e);
         throw $e;
     }
 
