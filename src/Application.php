@@ -42,12 +42,12 @@ class Application
     /**
      * Set the base path
      *
-     * @param string $basePath bath path ex. 'mybasepath'
+     * @param string $basePath bath path ex. '/mybasepath'
      * @return void
      */
     public function setBasePath($basePath)
     {
-        $this->basePath = $basePath;
+        $this->basePath = trim($basePath, '/');
     }
 
     /**
