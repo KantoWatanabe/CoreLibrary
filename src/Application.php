@@ -98,10 +98,10 @@ class Application
         list($class, $controller, $args) = $this->parseController($path);
 
         if ($class === null) {
+            http_response_code(404);
             if (is_callable($this->notFound)) {
                 call_user_func($this->notFound);
             }
-            http_response_code(404);
             return;
         }
     
