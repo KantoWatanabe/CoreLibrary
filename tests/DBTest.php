@@ -32,7 +32,7 @@ class DBTest extends TestCase
 
     public function testGetPdo()
     {
-        $this->assertInstanceOf(\PDO::class, DB::connection()->getPdo());
+        $this->assertInstanceOf(PDO::class, DB::connection()->getPdo());
     }
 
     public function testCRUD()
@@ -174,9 +174,9 @@ SQL;
                     'col3' => null,
                     'col4' => false,
                     'col5' => 1.1]);
-                throw new \Exception('test error!');
+                throw new Exception('test error!');
             });
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             // NOP
         }
 

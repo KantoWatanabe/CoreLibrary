@@ -8,6 +8,7 @@ namespace Kore;
 
 use Kore\Config;
 use Kore\Log;
+use PDO;
 
 /**
  * DB class
@@ -17,9 +18,9 @@ use Kore\Log;
 class DB
 {
     /**
-     * \PDO instance
+     * PDO instance
      *
-     * @var \PDO
+     * @var PDO
      */
     protected $pdo;
 
@@ -77,19 +78,24 @@ class DB
         $host = $config['host'];
         $db = $config['db'];
         $port = $config['port'];
+        $dsn = sprintf('mysql:host=%s;port=%s;dbname=%s;charset=utf8', $host, $port, $db);
+
         $user = $config['user'];
         $pass = $config['pass'];
 
-        $dsn = sprintf('mysql:host=%s;port=%s;dbname=%s;charset=utf8', $host, $port, $db);
-        $this->pdo = new \PDO($dsn, $user, $pass);
-        $this->pdo->setAttribute(\PDO::ATTR_EMULATE_PREPARES, false);
-        $this->pdo->setAttribute(\PDO::ATTR_ERRMODE, \PDO::ERRMODE_EXCEPTION);
+        $options = array(
+            PDO::ATTR_EMULATE_PREPARES => false,
+            PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION,
+            PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC,
+        );
+
+        $this->pdo = new PDO($dsn, $user, $pass, $options);
     }
 
     /**
-     * Get \PDO instance
+     * Get PDO instance
      *
-     * @return \PDO \PDO instance
+     * @return PDO PDO instance
      */
     public function getPdo()
     {
@@ -107,7 +113,7 @@ class DB
     {
         $stm = $this->execute($query, $params);
 
-        $result = $stm->fetchAll(\PDO::FETCH_ASSOC);
+        $result = $stm->fetchAll();
         return $result !== false ? $result : array();
     }
 
@@ -122,7 +128,7 @@ class DB
     {
         $stm = $this->execute($query, $params);
         
-        $result = $stm->fetch(\PDO::FETCH_ASSOC);
+        $result = $stm->fetch();
         return $result !== false ? $result: array();
     }
 
@@ -327,19 +333,19 @@ class DB
     {
         switch (gettype($value)) {
             case 'boolean':
-                $datatype = \PDO::PARAM_BOOL;
+                $datatype = PDO::PARAM_BOOL;
                 break;
             case 'integer':
-                $datatype = \PDO::PARAM_INT;
+                $datatype = PDO::PARAM_INT;
                 break;
             case 'string':
-                $datatype = \PDO::PARAM_STR;
+                $datatype = PDO::PARAM_STR;
                 break;
             case 'NULL':
-                $datatype = \PDO::PARAM_NULL;
+                $datatype = PDO::PARAM_NULL;
                 break;
             default:
-                $datatype = \PDO::PARAM_STR;
+                $datatype = PDO::PARAM_STR;
         }
         return $datatype;
     }
