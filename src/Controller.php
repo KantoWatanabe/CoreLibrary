@@ -7,6 +7,7 @@
 namespace Kore;
 
 use Kore\Log;
+use Exception;
 
 /**
  * Controller class
@@ -58,7 +59,7 @@ abstract class Controller
         try {
             $this->preaction();
             $this->action();
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             $this->handleError($e);
         }
         Log::debug(sprintf('[END]%s', $this->controller));
@@ -104,14 +105,36 @@ abstract class Controller
      * Handling Errors
      *
      * If you need to customize the handling of errors, please override it with subclasses.
-     * @param \Exception $e errors
+     * @param Exception $e errors
      * @return void
-     * @throws \Exception
+     * @throws Exception
      */
     protected function handleError($e)
     {
         Log::error($e);
         throw $e;
+    }
+
+    /**
+     * Handling Shutdown
+     *
+     * If you need to customize the handling of shutdown, please override it with subclasses.
+     * @return void
+     * @codeCoverageIgnore
+     */
+    public function handleShutdown()
+    {
+        $error = error_get_last();
+        if ($error) {
+            $errorFile = $error['file'];
+            $errorLine = $error['line'];
+            $errorMessage = $error['message'];
+            $errorType = $error['type'];
+
+            if ($errorType === E_ERROR) {
+                $this->handleError(new Exception("$errorMessage $errorFile:$errorLine"));
+            }
+        }
     }
 
     /**

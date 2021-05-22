@@ -6,6 +6,8 @@
 
 namespace Kore;
 
+use Exception;
+
 /**
  * Application class
  *
@@ -104,7 +106,10 @@ class Application
             }
             return;
         }
-    
+
+        /** @phpstan-ignore-next-line */
+        register_shutdown_function(array($class, 'handleShutdown'));
+
         $class->main($controller, $args);
     }
 
@@ -146,19 +151,22 @@ class Application
      *
      * @param array<string> $argv command line argument
      * @return void
-     * @throws \Exception thrown when the command class is not found.
+     * @throws Exception thrown when the command class is not found.
      */
     public function runCmd($argv)
     {
         if (!isset($argv[1])) {
-            throw new \Exception('Unable to find command name');
+            throw new Exception('Unable to find command name');
         }
 
         list($class, $command, $args, $opts) = $this->parseCommand($argv);
 
         if ($class === null) {
-            throw new \Exception('Unable to load command class ->' . $command);
+            throw new Exception('Unable to load command class ->' . $command);
         }
+
+        /** @phpstan-ignore-next-line */
+        register_shutdown_function(array($class, 'handleShutdown'));
 
         $class->main($command, $args, $opts);
     }
