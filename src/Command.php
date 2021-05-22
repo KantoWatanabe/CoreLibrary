@@ -152,7 +152,7 @@ abstract class Command
 
             if ($errorType === E_ERROR) {
                 $this->lockManager->unlock();
-                $this->handleError(new \Exception("$errorMessage $errorFile:$errorLine"));
+                $this->handleError(new Exception("$errorMessage $errorFile:$errorLine"));
             }
         }
     }

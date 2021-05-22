@@ -132,7 +132,7 @@ abstract class Controller
             $errorType = $error['type'];
 
             if ($errorType === E_ERROR) {
-                $this->handleError(new \Exception("$errorMessage $errorFile:$errorLine"));
+                $this->handleError(new Exception("$errorMessage $errorFile:$errorLine"));
             }
         }
     }
