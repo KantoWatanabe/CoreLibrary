@@ -7,6 +7,7 @@
 namespace Kore;
 
 use Kore\Log;
+use Exception;
 
 /**
  * Command class
@@ -32,6 +33,12 @@ abstract class Command
      * @var array<string>
      */
     protected $opts = array();
+    /**
+     * LockManager
+     *
+     * @var \Kore\LockManager
+     */
+    protected $lockManager;
 
     /**
      * Processing Execution
@@ -56,23 +63,23 @@ abstract class Command
         $this->opts = $opts;
         Log::init($this->commandName(), $this->logLevel());
 
-        $lockManager = new LockManager($this->commandName(), $this->lockTime());
-        if ($lockManager->isLock()) {
+        $this->lockManager = new LockManager($this->commandName(), $this->lockTime());
+        if ($this->lockManager->isLock()) {
             Log::warn('Process is running!');
             return;
         }
-        $lockManager->lock();
+        $this->lockManager->lock();
 
         Log::debug(sprintf('[START]%s', $this->command));
         try {
             $this->exec();
-        } catch (\Exception $e) {
-            $lockManager->unlock();
+        } catch (Exception $e) {
+            $this->lockManager->unlock();
             $this->handleError($e);
         }
         Log::debug(sprintf('[END]%s', $this->command));
 
-        $lockManager->unlock();
+        $this->lockManager->unlock();
     }
 
     /**
@@ -117,14 +124,37 @@ abstract class Command
      * Handling Errors
      *
      * If you need to customize the handling of errors, please override it with subclasses.
-     * @param \Exception $e errors
+     * @param Exception $e errors
      * @return void
-     * @throws \Exception
+     * @throws Exception
      */
     protected function handleError($e)
     {
         Log::error($e);
         throw $e;
+    }
+
+    /**
+     * Handling Shutdown
+     *
+     * If you need to customize the handling of shutdown, please override it with subclasses.
+     * @return void
+     * @codeCoverageIgnore
+     */
+    public function handleShutdown()
+    {
+        $error = error_get_last();
+        if ($error) {
+            $errorFile = $error['file'];
+            $errorLine = $error['line'];
+            $errorMessage = $error['message'];
+            $errorType = $error['type'];
+
+            if ($errorType === E_ERROR) {
+                $this->lockManager->unlock();
+                $this->handleError(new \Exception("$errorMessage $errorFile:$errorLine"));
+            }
+        }
     }
 
     /**
